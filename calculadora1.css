@@ -1,0 +1,73 @@
+.container {
+  max-width: 960px;
+}
+
+#imagenDiv {
+  padding-top: 30px;
+  position: relative;
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  font-size: medium;
+}
+.imagen {
+    filter: blur(5px) grayscale(30%);
+  -webkit-filter: blur(5px) grayscale(30%);
+  -moz-filter: blur(5px) grayscale(30%);
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold; 
+   font-size: 18px;
+}
+
+#myalert
+{
+  text-align: center;
+  padding-top: 12px;
+  color: red;
+  font-weight: bold; 
+}
+#myfinePrint
+{
+  text-align: center;
+  padding-top: 8px;
+}
+
+#myresult {
+          padding-top: 30px;
+          text-align: center;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 42px;
+    color: #0e2a63;
+    font-weight: bold;
+
+        }
+
+
+
+
+#graphicsDiv {
+          padding-top: 30px;
+        }
+        #imagenDiv {
+          padding-top: 30px;
+        }
+
+
+
+@media (max-width: 768px) {
+        #myresult {
+    font-size: 16px;
+
+        }
+        .centered {
+  font-weight: bold; 
+   font-size: 12px;
+}
+      }
