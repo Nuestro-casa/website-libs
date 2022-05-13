@@ -419,7 +419,7 @@ var options = {
         function graphResults(div,name,data,name2,data2)
         {
           var options = {
-            colors:['#f2704f', '#04213e', '#6b6768'],
+            colors:[ '#6b6768', '#04213e','#f2704f'],
           series: [{
           name: data[0].name,
           data: [data[0].value,data2[0].value]
