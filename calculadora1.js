@@ -34,7 +34,13 @@
 
 
         document.addEventListener("DOMContentLoaded", function(event) {
-
+            let priceInput = document.getElementById("price");
+            let rateInput = document.getElementById("rate");
+            let initialFee = document.getElementById("intialfee");
+            rateInput.innerHTML = '<option value="">Escoge una tasa</option>'
+            rateInput.innerHTML += GLOBAL_VARS.rates.map(el=>{
+              return `<option value="${el}">${el}</option>`
+            }).join("")
              // Comienza calculadora
             //fifteenPercent()
  
@@ -523,9 +529,9 @@ var options = {
 
             if(price)
             {
-              result=(price*15)/100
+              result=(price*GLOBAL_VARS.intialFeePercentage)/100
               initialFeeObject.placeholder="Minimo: $"+addCommas(result);
-              initialFeeObject.min=((price*15)/100);
+              initialFeeObject.min=((price*GLOBAL_VARS.intialFeePercentage)/100);
 
             }
             else
@@ -600,7 +606,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
           var initialFee = removeCommas(initialFeeObject.value) // C38
           var rate = (rateObject.value/100) // C40
 
-          porcentage=((price*80)/100)
+          porcentage=((price*GLOBAL_VARS.maxIntialFeePercentage)/100)
 
               if(initialFee > porcentage)
               {
@@ -613,7 +619,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     {
               var priceObject=document.getElementById("price");
               var value=removeCommas(priceObject.value)
-              var min=100000000
+              var min=GLOBAL_VARS.min
 
               if(value<min)
               {
@@ -628,7 +634,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     {
               var priceObject=document.getElementById("price");
               var value=removeCommas(priceObject.value)
-              var max=500000000
+              var max=GLOBAL_VARS.max
 
               if(value>max)
               {
