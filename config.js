@@ -1,5 +1,5 @@
 var GLOBAL_VARS = {
-  intialFeePercentage: 15,
+  intialFeePercentage: 20,
   maxIntialFeePercentage: 80,
   rates: [
     9.5, //
