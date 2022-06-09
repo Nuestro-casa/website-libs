@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
   let priceInput = document.getElementById("price");
   let rateInput = document.getElementById("rate");
   let initialFee = document.getElementById("intialfee");
-  rateInput.innerHTML = '<option value="">Escoge una tasa</option>';
   rateInput.innerHTML += GLOBAL_VARS.rates
     .map((el) => {
       return `<option value="${el}">${el}</option>`;
