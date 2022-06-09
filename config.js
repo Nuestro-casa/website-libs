@@ -25,4 +25,5 @@ var GLOBAL_VARS = {
   propertyTax: 0.68 / 100,
   extraordinaryExpenses: 0.5 / 100,
   mortgageTerm: 20,
+  monthlyPaymentYearOne: 1,
 };
