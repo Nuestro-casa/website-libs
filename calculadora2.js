@@ -48,25 +48,46 @@ function calculate(monthlyIncomeObject, rateObject, termObject, initialFeeObject
   // var initialFeeObject = document.getElementById("initialFee");
   var maximumValueMortgagePaymentObject = monthlyIncomeObject * (30 / 100);
   var va = 0;
+  var nuestro = 0;
+  var hipoteca = 0;
+  var leasing = 0;
+
   rateObject = rateObject / 12;
 
   for (var i = 1; i <= termObject; i++) {
     va += (maximumValueMortgagePaymentObject)/(Math.pow((1 + rateObject),i));
   }
 
+  nuestro = Math.min(Math.max(va + initialFeeObject, va / (1 - 0.15)), initialFeeObject / 0.15);
+  console.log("Nuestro: " + Math.round(nuestro));
+
+  leasing = Math.min(Math.max(va + initialFeeObject, va / (1 - 0.2)), initialFeeObject / 0.2);
+  console.log("Leasing: " + Math.round(leasing));
+
+  hipoteca = Math.min(Math.max(va + initialFeeObject, va / (1 - 0.3)), initialFeeObject / 0.3);
+  console.log("Hipoteca: " + Math.round(hipoteca));
+
   console.log("Cuanto me prestan " + va);
 
   
   // Comenzamos a graficar
-  var name = "Nuestro";
+  var name = "Cuanto me prestan";
   var data = [
     {
       name: "Valor Maximo Hipoteca",
       value: maximumValueMortgagePaymentObject,
     },
     {
-      name: "Cuanto me prestan",
-      value: va,
+      name: "NUESTRO",
+      value: nuestro,
+    },
+    {
+      name: "Hipoteca",
+      value: hipoteca,
+    },
+    {
+      name: "Leasing",
+      value: leasing,
     },
   ];
 
