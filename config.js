@@ -14,7 +14,7 @@ var GLOBAL_VARS = {
   max: 500000000,
   inflation: 3.5 / 100,
   discount: 10 / 100,
-  capRate: 10 / 100,
+  capRate: 11 / 100,
   PrincipalSavingPremium: 2.6 / 100,
   fee: 1.2 / 100,
   canonExpenses: 12 / 100,
