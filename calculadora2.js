@@ -52,6 +52,8 @@ function calculate(monthlyIncomeObject, rateObject, termObject, initialFeeObject
   var hipoteca = 0;
   var leasing = 0;
 
+  termObject = termObject * 12;
+
   rateObject = rateObject / 12;
 
   for (var i = 1; i <= termObject; i++) {
