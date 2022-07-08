@@ -394,12 +394,12 @@ function calculate() {
   // Generamos resultados generales
   createResult(data, data2);
 
-  createFinePrint();
+  createFinePrint(rate, (1 - initialFee / price)*100);
 }
 
-function createFinePrint() {
+function createFinePrint(rate,x ) {
   var html =
-    "<p>*este calculo tiene en cuenta un financiamiento de (x%) con una tasa y% a z años</p>";
+    `<p>*este calculo tiene en cuenta un financiamiento de (${x}%) con una tasa ${rate *100}% a ${GLOBAL_VARS.mortgageTerm } años</p>`;
   $("#myfinePrint").html(html);
 }
 
