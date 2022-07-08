@@ -651,7 +651,7 @@ function myalert() {
 
   if (initialFee < porcentage) {
     $("#myalert").html(
-      "Recuerda, en Colombia los bancos exigen una cuota inicial del 33% mas los costos de escrituración, Necesitas  $" +
+      "Recuerda, en Colombia los bancos exigen una cuota inicial del 30% mas los costos de escrituración (3%), Necesitas  $" +
         addCommas(porcentage) +
         " ahorrados"
     );
