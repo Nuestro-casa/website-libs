@@ -133,6 +133,14 @@ function calculateCuantoMePrestan(
     var hipoteca = 0;
     var leasing = 0;
   
+    //TODO Cambiar a Variables globales 
+    //Nuestro fee con escrituracion se financia PROBLEMA 1
+    //
+    let nstroFee = 0.15
+    let leasingFee = 0.225
+    let hipotecaFee = 0.325
+
+
     termObject = termObject * 12;
   
     rateObject = rateObject / 12;
@@ -141,13 +149,13 @@ function calculateCuantoMePrestan(
       va += (maximumValueMortgagePaymentObject)/(Math.pow((1 + rateObject),i));
     }
   
-    nuestro = Math.min(Math.max(va + initialFeeObject, va / (1 - 0.15)), initialFeeObject / 0.15);
+    nuestro = Math.min(Math.max(va + initialFeeObject, va / (1 - nstroFee)), initialFeeObject / nstroFee);
     console.log("Nuestro: " + Math.round(nuestro));
   
-    leasing = Math.min(Math.max(va + initialFeeObject, va / (1 - 0.2)), initialFeeObject / 0.2);
+    leasing = Math.min(Math.max(va + initialFeeObject, va / (1 - leasingFee)), initialFeeObject / leasingFee);
     console.log("Leasing: " + Math.round(leasing));
   
-    hipoteca = Math.min(Math.max(va + initialFeeObject, va / (1 - 0.3)), initialFeeObject / 0.3);
+    hipoteca = Math.min(Math.max(va + initialFeeObject, va / (1 - hipotecaFee)), initialFeeObject / hipotecaFee);
     console.log("Hipoteca: " + Math.round(hipoteca));
   
     console.log("Cuanto me prestan " + va);
