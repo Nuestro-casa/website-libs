@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="frontend.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="form" class="calculadora-container">
+      <div class="header-calculadora">
+        <h1>Calculadora de gastos mensuales</h1>
+
+        <h2>
+          Cuanto me financian- aquí alguna información personal para calcular el
+          valor a financiar
+        </h2>
+      </div>
+      <div class="card">
+        <div class="input-group">
+          <label for="progress"> Precio del apartamento (Pesos COP) </label>
+          <div class="input-wrapper error">
+            <div class="icon">$</div>
+            <input
+              class="input"
+              id="progressNumber"
+              placeholder="Precio entre 100,000,000-500,000,000"
+              type="number"
+              min="100000000"
+              max="500000000"
+              required
+              oninput="range.value=value"
+            />
+          </div>
+          <input
+            type="range"
+            id="range"
+            name="volume"
+            value="100000000"
+            min="100000000"
+            max="500000000"
+            step="10000000"
+            required
+            oninput="progressNumber.value=value"
+          />
+          <div class="progress-points">
+            <p>100.000.000</p>
+            <p>500.000.000</p>
+          </div>
+          <div class="input-error">
+            <p>Este campo es requerido (min100M, max 500M)</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="progress"> ¿Cuanto tienes ahorrado? </label>
+          <div class="input-wrapper">
+            <div class="icon">$</div>
+            <input
+              class="input"
+              placeholder="Ahorro para el inmueble"
+              type="number"
+            />
+          </div>
+          <div class="input-error">
+            <p>Este campo es requerido (min100M, max 500M)</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <p class="card-header">Comparemos</p>
+        <div class="input-group">
+          <label for="percentage"
+            >¿Cuál es el % de la tasa de financiación de la hipoteca con el
+            banco?</label
+          >
+          <div class="input-wrapper">
+            <div class="icon">%</div>
+            <select class="input" placeholder="Escoge tu tasa">
+              <option value="" class="placeholder" selected disabled hidden>
+                Elige tu tasa
+              </option>
+              <option value="">13%</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <button class="btn-submit" id="submitBtn" type="submit" disabled>
+        Calcular
+      </button>
+    </form>
+
+    <script>
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+      const numberInput = document.querySelector("#progressNumber");
+
+      function handleInputChange(e) {
+        let target = e.target;
+        if (e.target.type !== "range") {
+          target = document.getElementById("range");
+        }
+        const min = target.min;
+        const max = target.max;
+        const val = target.value;
+
+        target.style.backgroundSize =
+          ((val - min) * 100) / (max - min) + "% 100%";
+      }
+
+      rangeInputs.forEach((input) => {
+        input.addEventListener("input", handleInputChange);
+      });
+
+      numberInput.addEventListener("input", handleInputChange);
+      const form = document.getElementById("form");
+      form.addEventListener("change", () => {
+        document.getElementById("submitBtn").disabled = !form.checkValidity();
+      });
+    </script>
+  </body>
+</html>

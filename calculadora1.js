@@ -188,7 +188,7 @@ function calculate() {
 
   var rent =
     +OurfullRent * (1 - initialFee / price) +
-    ((OurexpensesOnCannon + OurFee) * initialFee) / price; // D58
+    ((OurexpensesOnCannon + OurFee) * initialFee) / price; // D58 ---> D95
 
   //fix results
   rent = -Math.round(rent);
@@ -339,12 +339,12 @@ function calculate() {
   var name = "Nuestro";
   var data = [
     {
-      name: "Arriendo/Intereses",
-      value: -rent,
+      name: "Costo financiero",
+      value: -rent,//D99
     },
     {
-      name: "Ahorro",
-      value: savings,
+      name: "Aporte a capital (opcional)",
+      value: savings,//
     },
     {
       name: "Gastos",
