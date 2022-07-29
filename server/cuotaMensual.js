@@ -91,10 +91,10 @@ function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, ter
     console.log("financing", financing);
     let interestRate = globalInterestRate;
     console.log("interestRate", interestRate);
-    let downpayment= transactionValue/cuantoTengoAhorrado;
+    let downpayment= cuantoTengoAhorrado/transactionValue;
     console.log("downpayment", downpayment);
    
-    let monthlyMinimumPayment = (1-downpayment)*apartmentValue*interest/12;
+    let monthlyMinimumPayment = (1-downpayment)*apartmentValue*interestRate/12;
     console.log("monthlyMinimumPayment", monthlyMinimumPayment);
     
     let fiduciaria = Math.min(fiduciariaRate*apartmentValue/12,lowerBoundFiduciaria)
@@ -103,19 +103,20 @@ function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, ter
     console.log("seguro", seguro);
     let impuestos = impuestosRate*apartmentValue/12;
     console.log("impuestos", impuestos);
-    let administracion = Math.min(adminInmuebleRate*monthlyMinimumPayment/12,lowerBoundAdmin)
+    let administracion = Math.min(adminInmuebleRate*monthlyMinimumPayment,lowerBoundAdmin)
     console.log("administracion", administracion);
     let capex = capexRate*apartmentValue/12;
     console.log("capex", capex);
-    let maintenance = maintainanceRate*monthlyMinimumPayment/12
+    let maintenance = maintainanceRate*monthlyMinimumPayment
     console.log("maintenance", maintenance);
     
     let totalCostosNuestro = fiduciaria + seguro + impuestos + administracion+capex+maintenance;
     console.log("totalCostosNuestro", totalCostosNuestro);
     let ahorro;
     calculoSavingRate.forEach((el,i)=>{
-        if(Math.floor(downpayment)==el.cuotaInicial)
-        ahorro = el.ahorro;
+
+        if(Math.floor(downpayment*100)==el.cuotaInicial*100)
+            ahorro = el.ahorro/100;
     })
     console.log("ahorro", ahorro);
 
@@ -129,6 +130,8 @@ function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, ter
 
     let totalMinimumPayment = monthlyMinimumPayment + financingCosts;
     console.log("totalMinimumPayment", totalMinimumPayment);
+
+    console.log(suggestedSavingsToReach25+ totalMinimumPayment, suggestedSavingsToReach25, totalMinimumPayment)
     let totalSuggestedPayment = suggestedSavingsToReach25 +totalMinimumPayment;
     console.log("totalSuggestedPayment", totalSuggestedPayment);
     let totalSuggestedPaymentCostsIncl= costsOutsideFinancing + totalSuggestedPayment;
@@ -137,9 +140,13 @@ function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, ter
     //comparison 
     let seguroApto= apartmentValue*seguroAptoRate/12;
     console.log("seguroApto", seguroApto);
-    let seguroVida= apartmentValue*seguroVidaRate/12;
+    let seguroVida= (apartmentValue-cuantoTengoAhorrado)*seguroVidaRate/12;
     console.log("seguroVida", seguroVida);
-    let cuotaTotalHip = -PMT(Math.pow(1+interest,1/12)-1, term * 12, apartmentValue - cuantoTengoAhorrado, 0 )
+    console.log("IRM", Math.pow(1+interest,1/12)-1)
+    console.log("TERM*12", term * 12)
+    console.log("PV",apartmentValue - cuantoTengoAhorrado)
+    let cuotaTotalHip = -PMT(Math.pow(1+interest,1/12)-1, term * 12, apartmentValue - cuantoTengoAhorrado, 0, 1 )
+
     console.log("cuotaTotalHip", cuotaTotalHip);
     let interesHip = (Math.pow(1+interest,1/12)-1)*(apartmentValue - cuantoTengoAhorrado)
     console.log("interesHip", interesHip);
@@ -156,16 +163,43 @@ function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, ter
 
 }
 
-function PMT (ir, np, pv, fv ) {
-    /*
-    ir - interest rate per month
-    np - number of periods (months)
-    pv - present value
-    fv - future value (residual value)
-    */
-    pmt = ( ir * ( pv * Math.pow ( (ir+1), np ) + fv ) ) / ( ( ir + 1 ) * ( Math.pow ( (ir+1), np) -1 ) );
-    return pmt;
-   }
+// function PMT (ir, np, pv, fv ) {
+//     /*
+//     ir - interest rate per month
+//     np - number of periods (months)
+//     pv - present value
+//     fv - future value (residual value)
+//     */
 
+    
+//     var pmt = ( 0.010978851950173452 * ( 328000000 * Math.pow( (0.010978851950173452+1)  , 240 ) ) ) / ( ( 0.010978851950173452 + 1 ) * ( Math.pow ( (0.010978851950173452+1), 240) -1 ) );
+//     return pmt;
+//    }
+function PMT(ir, np, pv, fv, type) {
+    /*
+     * ir   - interest rate per month
+     * np   - number of periods (months)
+     * pv   - present value
+     * fv   - future value
+     * type - when the payments are due:
+     *        0: end of the period, e.g. end of month (default)
+     *        1: beginning of period
+     */
+    var pmt, pvif;
+
+    fv || (fv = 0);
+    type || (type = 0);
+
+    if (ir === 0)
+        return -(pv + fv)/np;
+
+    pvif = Math.pow(1 + ir, np);
+    pmt = - ir * (pv * pvif + fv) / (pvif - 1);
+
+    if (type === 1)
+        pmt /= (1 + ir);
+
+    return pmt;
+}
 
 calculateGastosMensuales(400000000, 72000000, interestComparable, term)

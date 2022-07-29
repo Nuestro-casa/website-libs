@@ -21,7 +21,7 @@
         <div class="input-group">
           <label for="progress"> Precio del apartamento (Pesos COP) </label>
           <div class="input-wrapper error">
-            <div class="icon">$</div>
+            <div class="icon"></div>
             <input
               class="input"
               id="progressNumber"
@@ -36,7 +36,6 @@
           <input
             type="range"
             id="range"
-            name="volume"
             value="100000000"
             min="100000000"
             max="500000000"
@@ -55,11 +54,12 @@
         <div class="input-group">
           <label for="progress"> ¿Cuanto tienes ahorrado? </label>
           <div class="input-wrapper">
-            <div class="icon">$</div>
+            <div class="icon"></div>
             <input
               class="input"
               placeholder="Ahorro para el inmueble"
               type="number"
+              id="ahorroInput"
             />
           </div>
           <div class="input-error">
@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div class="card">
+      <!-- <div class="card">
         <p class="card-header">Comparemos</p>
         <div class="input-group">
           <label for="percentage"
@@ -84,38 +84,342 @@
             </select>
           </div>
         </div>
-      </div>
+      </div> -->
       <button class="btn-submit" id="submitBtn" type="submit" disabled>
         Calcular
       </button>
     </form>
+    <div
+      class="calculadora-container resultados"
+      style="display: none"
+      id="resultados"
+    >
+      <div onclick="regresar()" width="24" height="24" class="arrowback">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z"
+            fill="#323232"
+          />
+        </svg>
+      </div>
+      <h2>Pago estimado al mes</h2>
+      <div class="card gastos-resultados">
+        <div class="inner-card">
+          <h2>Tú cuota con Nuestro</h2>
+          <hr />
+          <div class="fila main-result">
+            <p>Pago mensual fijo</p>
+            <p><span id="pagoMensualFijo"></span></p>
+          </div>
+        </div>
 
+        <!-- <div class="fila">
+          <p>Que porcentaje (%) quieres comprar al año</p>
+          <p>5%</p>
+          <input type="range" />
+        </div> -->
+
+        <div class="fila toggle" id="toggle">
+          <p>Ver el aporte a capital</p>
+          <label class="pure-material-switch">
+            <input type="checkbox" />
+            <span></span>
+          </label>
+        </div>
+        <div class="grafica">
+          <div id="costoFinancieroNS" class="costoFinanciero"></div>
+          <div id="gastosNS" class="gastos"></div>
+          <div id="aporteCapitalNS" class="aporteCapital"></div>
+          <div id="grisNS" class="gris"></div>
+        </div>
+        <div class="grafica-labels">
+          <div class="fila">
+            <div class="grafica-label-wrapper-text">
+              <div class="dot"></div>
+              <p>Costo financiero</p>
+            </div>
+            <p><span id="costoFinancieroNSValue"></span></p>
+          </div>
+
+          <div class="fila">
+            <div class="grafica-label-wrapper-text">
+              <div class="dot azul"></div>
+              <p>Gastos</p>
+            </div>
+            <p><span id="gastosNSValue"></span></p>
+          </div>
+          <div class="fila" id="label-aporte">
+            <div class="grafica-label-wrapper-text">
+              <div class="dot verde"></div>
+              <p>Aporte a capital (opcional)</p>
+            </div>
+            <p><span id="aporteACapitalNSValue"></span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-hip">
+        <h2>Pago con <b>hipoteca</b> al mes es:</h2>
+        <div class="fila">
+          <p>Pago mensual fijo</p>
+          <p><span id="pagoMensualFijoHip"></span></p>
+        </div>
+      </div>
+      <div class="grafica hip">
+        <div id="costoFinancieroHip" class="costoFinanciero"></div>
+        <div id="aporteCapitalHip" class="aporteCapital"></div>
+        <div id="gastosHip" class="gastos"></div>
+      </div>
+      <div class="grafica-labels hip">
+        <div class="fila">
+          <div class="grafica-label-wrapper-text">
+            <div class="dot"></div>
+            <p>Costo financiero</p>
+          </div>
+          <p><span id="costoFinancieroHipValue"></span></p>
+        </div>
+
+        <div class="fila">
+          <div class="grafica-label-wrapper-text">
+            <div class="dot azul"></div>
+            <p>Gastos</p>
+          </div>
+          <p><span id="gastosHipValue"></span></p>
+        </div>
+        <div class="fila">
+          <div class="grafica-label-wrapper-text">
+            <div class="dot verde"></div>
+            <p>Aporte a capital (obligatorio)</p>
+          </div>
+          <p><span id="aporteACapitalHipValue"></span></p>
+        </div>
+      </div>
+      <div class="card-contourn">
+        <h2>
+          Con nuestro tu cuota es mensual es <b id="ahoorroConNuestro"></b>
+          <b>menos</b> que la hipoteca
+        </h2>
+      </div>
+
+      <div class="card-aclaraciones">
+        <p class="alert">
+          Recuerda los bancos exigen una cuota inicial del 30% mas los costosos
+          de escrituración (3%).
+        </p>
+        <hr />
+        <p class="normal">Necesitas <b id="necesitasHip"> </b> ahorrados</p>
+
+        <p class="aclaratoria">
+          *Este calculo tiene en cuenta un financiamiento de (<span
+            id="financiamientoPercentage"
+          ></span
+          >) con una tasa a <span id="tasa"></span> a
+          <span id="term"></span> años
+        </p>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.js"></script>
     <script>
-      const rangeInputs = document.querySelectorAll('input[type="range"]');
-      const numberInput = document.querySelector("#progressNumber");
+      var currencyFormatter = new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
 
-      function handleInputChange(e) {
-        let target = e.target;
-        if (e.target.type !== "range") {
-          target = document.getElementById("range");
-        }
-        const min = target.min;
-        const max = target.max;
-        const val = target.value;
+        // These options are needed to round to whole numbers if that's what you want.
+        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+      });
+      var option = {
+        style: "percent",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      };
+      var percentageFormatter = new Intl.NumberFormat("en-US", option);
 
-        target.style.backgroundSize =
-          ((val - min) * 100) / (max - min) + "% 100%";
+      document.getElementById("toggle").addEventListener("change", (e) => {
+        document.getElementById("label-aporte").style.display = e.target.checked
+          ? "flex"
+          : "none";
+
+        document.getElementById("aporteCapitalNS").style.display = e.target
+          .checked
+          ? "block"
+          : "none";
+        aporteCapitalNS;
+      });
+
+      function regresar() {
+        document.getElementById("form").style.display = "block";
+        document.getElementById("resultados").style.display = "none";
+      }
+      var consulta;
+      var resultado;
+      document.getElementById("form").addEventListener("submit", fetchValues);
+      function fetchValues(e) {
+        e.preventDefault();
+        consulta = {
+          precio: +document.getElementById("progressNumber").value,
+          ahorro: +document.getElementById("ahorroInput").value,
+        };
+        let url = "http://localhost:3000/costosMensuales";
+        fetch(url, {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            precio: +document.getElementById("progressNumber").value,
+            ahorro: +document.getElementById("ahorroInput").value,
+          }),
+        })
+          .then((el) => el.json())
+          .then((el) => {
+            resultado = el.result;
+            console.log(el);
+            document.getElementById("pagoMensualFijo").innerText =
+              currencyFormatter.format(
+                Math.floor(resultado.nuestro.totalMinimumPayment)
+              );
+            // document.getElementById("ahorroSugeridoOpcional").innerText =
+            //   Math.floor(resultado.nuestro.suggestedSavingsToReach25);
+            document.getElementById("costoFinancieroNSValue").innerText =
+              currencyFormatter.format(
+                Math.floor(resultado.nuestro.totalMinimumPayment)
+              );
+            document.getElementById("aporteACapitalNSValue").innerText =
+              currencyFormatter.format(
+                Math.floor(resultado.nuestro.suggestedSavingsToReach25)
+              ); //96
+            document.getElementById("gastosNSValue").innerText =
+              currencyFormatter.format(
+                Math.floor(
+                  resultado.nuestro.costsOutsideFinancing //98
+                )
+              );
+            document.getElementById("pagoMensualFijoHip").innerText =
+              currencyFormatter.format(Math.floor(resultado.hip.cuotaTotalHip));
+            document.getElementById("costoFinancieroHipValue").innerText =
+              currencyFormatter.format(
+                Math.floor(resultado.hip.interesHip + resultado.hip.segurosHip)
+              );
+            document.getElementById("aporteACapitalHipValue").innerText =
+              currencyFormatter.format(
+                Math.floor(resultado.hip.amortizacionHip)
+              );
+            document.getElementById("gastosHipValue").innerText =
+              currencyFormatter.format(Math.floor(resultado.hip.costosHip));
+
+            document.getElementById("form").style.display = "none";
+            document.getElementById("resultados").style.display = "flex";
+
+            let hipoteca = [
+              resultado.hip.interesHip + resultado.hip.segurosHip,
+              resultado.hip.amortizacionHip,
+              resultado.hip.costosHip,
+            ];
+
+            let nuestro = [
+              resultado.nuestro.totalMinimumPayment,
+              resultado.nuestro.suggestedSavingsToReach25,
+              resultado.nuestro.costsOutsideFinancing,
+            ];
+            let totHipoteca = hipoteca[0] + hipoteca[1] + hipoteca[2];
+            let diferencia =
+              totHipoteca - (nuestro[0] + nuestro[1] + nuestro[2]);
+            //Grafica Nuestro
+            let totNuestro = nuestro[0] + nuestro[1] + nuestro[2] + diferencia;
+            let costoFinancieroPercentageNS = (nuestro[0] / totNuestro) * 100;
+            let aporteCapitalPercentageNS = (nuestro[1] / totNuestro) * 100;
+            let gastosPercentageNS = (nuestro[2] / totNuestro) * 100;
+            let grisPercentageNS = (diferencia / totNuestro) * 100;
+
+            let costoFinancieroPercentageHip =
+              (hipoteca[0] / totHipoteca) * 100;
+            console.log(costoFinancieroPercentageHip);
+            let aporteCapitalPercentageHip = (hipoteca[1] / totHipoteca) * 100;
+            console.log(aporteCapitalPercentageHip);
+            let gastosPercentageHip = (hipoteca[2] / totHipoteca) * 100;
+            console.log(gastosPercentageHip);
+
+            document.getElementById("costoFinancieroNS").style.width =
+              costoFinancieroPercentageNS + "%";
+            document.getElementById("gastosNS").style.width =
+              costoFinancieroPercentageNS + gastosPercentageNS + "%";
+            document.getElementById("aporteCapitalNS").style.width =
+              costoFinancieroPercentageNS +
+              aporteCapitalPercentageNS +
+              gastosPercentageNS +
+              "%";
+            document.getElementById("grisNS").style.width =
+              costoFinancieroPercentageNS +
+              gastosPercentageNS +
+              aporteCapitalPercentageNS +
+              grisPercentageNS +
+              "%";
+            //Grafica Hipoteca
+            document.getElementById("costoFinancieroHip").style.width =
+              costoFinancieroPercentageHip + "%";
+            document.getElementById("gastosHip").style.width =
+              costoFinancieroPercentageHip + gastosPercentageHip + "%";
+            document.getElementById("aporteCapitalHip").style.width =
+              gastosPercentageHip +
+              aporteCapitalPercentageHip +
+              costoFinancieroPercentageHip +
+              "%";
+
+            document.getElementById("ahoorroConNuestro").innerText =
+              currencyFormatter.format(
+                Math.floor(
+                  resultado.hip.cuotaTotalHip -
+                    resultado.nuestro.totalMinimumPayment
+                )
+              );
+
+            document.getElementById("necesitasHip").innerText =
+              currencyFormatter.format(Math.floor(consulta.precio * 0.33));
+            //(1 - initialFee / price)*100
+            document.getElementById("financiamientoPercentage").innerText =
+              percentageFormatter.format(1 - consulta.ahorro / consulta.precio);
+            document.getElementById("tasa").innerText =
+              percentageFormatter.format(resultado.interestComparable);
+            document.getElementById("term").innerText = resultado.term;
+          });
       }
 
-      rangeInputs.forEach((input) => {
-        input.addEventListener("input", handleInputChange);
-      });
+      window.onload = () => {
+        //SINCRONIZAR RANGE y INPUT
+        const rangeInputs = document.querySelectorAll('input[type="range"]');
+        const numberInput = document.querySelector("#progressNumber");
 
-      numberInput.addEventListener("input", handleInputChange);
-      const form = document.getElementById("form");
-      form.addEventListener("change", () => {
-        document.getElementById("submitBtn").disabled = !form.checkValidity();
-      });
+        function handleInputChange(e) {
+          let target = e.target;
+          if (e.target.type !== "range") {
+            target = document.getElementById("range");
+          }
+          const min = target.min;
+          const max = target.max;
+          const val = target.value;
+
+          target.style.backgroundSize =
+            ((val - min) * 100) / (max - min) + "% 100%";
+        }
+
+        rangeInputs.forEach((input) => {
+          input.addEventListener("input", handleInputChange);
+        });
+
+        numberInput.addEventListener("input", handleInputChange);
+        const form = document.getElementById("form");
+        form.addEventListener("change", () => {
+          document.getElementById("submitBtn").disabled = !form.checkValidity();
+        });
+      };
     </script>
   </body>
 </html>
