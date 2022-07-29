@@ -37,7 +37,7 @@ function fetchValues(e) {
     precio: +document.getElementById("progressNumber").value,
     ahorro: +document.getElementById("ahorroInput").value,
   };
-  let url = "http://localhost:3000/costosMensuales";
+  let url = "https://nuestro-calculadoras-live.herokuapp.com/";
   fetch(url, {
     method: "POST",
 
