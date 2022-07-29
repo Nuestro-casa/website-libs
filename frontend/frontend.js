@@ -55,6 +55,9 @@ function fetchValues(e) {
   })
     .then((el) => el.json())
     .then((el) => {
+      document.getElementById("submitBtn").innerText = "CALCULAR";
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("submitBtn").style.background = "#E27758";
       resultado = el.result;
       console.log(el);
       document.getElementById("pagoMensualFijo").innerText =
