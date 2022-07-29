@@ -33,6 +33,10 @@ var resultado;
 document.getElementById("form").addEventListener("submit", fetchValues);
 function fetchValues(e) {
   e.preventDefault();
+  document.getElementById("submitBtn").innerText = "Cargando...";
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("submitBtn").style.background =
+    "rgba(253, 218, 197, 1)";
   consulta = {
     precio: +document.getElementById("progressNumber").value,
     ahorro: +document.getElementById("ahorroInput").value,
