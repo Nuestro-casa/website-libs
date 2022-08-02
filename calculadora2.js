@@ -40,6 +40,78 @@ document.addEventListener("DOMContentLoaded", function (event) {
     .join("");
   // Comienza calculadora 2 - Cuanto me prestan
  
+function calculate(monthlyIncomeObject, initialFeeObject) {
+  ////Initial Variables
+
+  var usableSalary = 0.9;
+  var salaryForRent = 0.35;
+  var salaryForSavings = 0.1;
+  var estimateTxCost = 0.0323;
+  var maximunFeePercentage = (salaryForRent + salaryForSavings) * usableSalary;
+  var maximunFee = maximunFeePercentage * monthlyIncomeObject;
+
+  var bankMaximunAparmentValue = initialFeeObject / (0.3 + estimateTxCost);
+  var nuestroMaximunAparmentValue = 0;
+
+  var rate = 0.15;
+  var difference = 0;
+  var totalTxValue = 0;
+  var valorApto = 0;
+  var rentaMinima = 0;
+  var leaseRate = 0.1153;
+  var savePercentage = 0;
+  var save = 0;
+  var cuotaTotal;
+  var salarioRequerido = 0;
+
+  while (difference > 0) {
+    totalTxValue = initialFeeObject / rate;
+    valorApto = totalTxValue / 1.1;
+    rentaMinima = leaseRate * (valorApto * (1 - rate)) / 12;
+    savePercentage = (rate == 0.15) ? 0.001878 : (roundToTwo(rate) == 0.16) ? 0.001689 : (roundToTwo(rate) == 0.17) ? 0.001502 : (roundToTwo(rate) == 0.18) ? 0.001315 : (roundToTwo(rate) == 0.19) ? 0.001126 : (roundToTwo(rate) == 0.20) ? 0.000939 : (roundToTwo(rate) == 0.21) ? 0.000752 : (roundToTwo(rate) == 0.22) ? 0.000563 : (roundToTwo(rate) == 0.23) ? 0.000375 : (roundToTwo(rate) == 0.24) ? 0.000187 : (roundToTwo(rate) >= 0.25) ? 0.00 : 0.00;
+    save = valorApto * savePercentage;
+    cuotaTotal = save + rentaMinima;
+    salarioRequerido = cuotaTotal / maximunFeePercentage;
+    difference = salarioRequerido - monthlyIncomeObject;
+
+    nuestroMaximunAparmentValue = valorApto;
+
+    rate += 0.01;
+    
+  }
+
+  console.log("Cuanto me prestan BANCO: " + bankMaximunAparmentValue);
+  console.log("Cuanto me prestan NUESTRO: " + nuestroMaximunAparmentValue);
+
+  
+  // Comenzamos a graficar
+  var name = "Cuanto me prestan";
+  var data = [
+    {
+      name: "NUESTRO",
+      value: nuestroMaximunAparmentValue,
+    },
+    {
+      name: "BANCO",
+      value: bankMaximunAparmentValue,
+    },
+  ];
+
+  
+
+  var div = "graphic";
+  graphResults(div, name, data);
+
+  // Generamos resultados generalesroundToTwo(rate)
+  createResult(data);
+
+  createFinePrint();
+}
+
+function roundToTwo(num) {
+  return +(Math.round(num + "e+2")  + "e-2");
+}
+
 function calculate(monthlyIncomeObject, rateObject, termObject, initialFeeObject) {
   ////Initial Variables
   // var monthlyIncomeObject = document.getElementById("monthlyIncome");
