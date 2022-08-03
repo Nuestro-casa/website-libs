@@ -42,19 +42,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
  
 function calculate(monthlyIncomeObject, initialFeeObject) {
   ////Initial Variables
-
   var usableSalary = 0.9;
   var salaryForRent = 0.35;
   var salaryForSavings = 0.1;
   var estimateTxCost = 0.0323;
   var maximunFeePercentage = (salaryForRent + salaryForSavings) * usableSalary;
   var maximunFee = maximunFeePercentage * monthlyIncomeObject;
-
   var bankMaximunAparmentValue = initialFeeObject / (0.3 + estimateTxCost);
   var nuestroMaximunAparmentValue = 0;
-
   var rate = 0.15;
-  var difference = 0;
+  var difference = 1;
   var totalTxValue = 0;
   var valorApto = 0;
   var rentaMinima = 0;
@@ -63,7 +60,6 @@ function calculate(monthlyIncomeObject, initialFeeObject) {
   var save = 0;
   var cuotaTotal;
   var salarioRequerido = 0;
-
   while (difference > 0) {
     totalTxValue = initialFeeObject / rate;
     valorApto = totalTxValue / 1.1;
@@ -73,11 +69,8 @@ function calculate(monthlyIncomeObject, initialFeeObject) {
     cuotaTotal = save + rentaMinima;
     salarioRequerido = cuotaTotal / maximunFeePercentage;
     difference = salarioRequerido - monthlyIncomeObject;
-
     nuestroMaximunAparmentValue = valorApto;
-
     rate += 0.01;
-    
   }
 
   console.log("Cuanto me prestan BANCO: " + bankMaximunAparmentValue);
