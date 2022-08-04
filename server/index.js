@@ -370,11 +370,12 @@ function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
     var totalTxValue = 0;
     var valorApto = 0;
     var rentaMinima = 0;
-    var leaseRate = 0.1153;
+    var leaseRate = 0.1253;
     var savePercentage = 0;
     var save = 0;
     var cuotaTotal;
     var salarioRequerido = 0;
+    let printVal = 0;
     while (difference > 0) {
       totalTxValue = initialFeeObject / rate;
       valorApto = totalTxValue / 1.1;
@@ -386,12 +387,20 @@ function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
       difference = salarioRequerido - monthlyIncomeObject;
       nuestroMaximunAparmentValue = valorApto;
       rate += 0.01;
+      printVal =rate
     }
   
     console.log("Cuanto me prestan BANCO: " + bankMaximunAparmentValue);
     console.log("Cuanto me prestan NUESTRO: " + nuestroMaximunAparmentValue);
   
-    
+    var currencyFormatter = new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+      
+        // These options are needed to round to whole numbers if that's what you want.
+        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+      });
     // Comenzamos a graficar
     var name = "Cuanto me prestan";
     var data = [
