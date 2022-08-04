@@ -403,17 +403,24 @@ function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
       });
     // Comenzamos a graficar
     var name = "Cuanto me prestan";
-    var data = [
-      {
-        name: "NUESTRO",
-        value: nuestroMaximunAparmentValue,
-      },
-      {
-        name: "BANCO",
-        value: bankMaximunAparmentValue,
-      },
-    ];
-  
+    // var data = [
+    //   {
+    //     name: "NUESTRO",
+    //     value: nuestroMaximunAparmentValue,
+    //   },
+    //   {
+    //     name: "BANCO",
+    //     value: bankMaximunAparmentValue,
+    //   },
+    // ];
+    var data = {
+        nuestro: {
+            value: nuestroMaximunAparmentValue,
+        },
+        banco:{
+            value: bankMaximunAparmentValue
+        }
+    }
     return data
 
   }
