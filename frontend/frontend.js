@@ -186,19 +186,19 @@ window.onload = () => {
 
     rangeInputsAhorro.forEach((e) => {
       e.min = val * 0.165;
-      e.max = val * 0.85;
+      e.max = val * 0.5;
       e.value = val * 0.165;
       e.style.backgroundSize =
         ((e.value - e.min) * 100) / (e.max - e.min) + "% 100%";
     });
     numberInputAhorro.min = val * 0.165;
-    numberInputAhorro.max = val * 0.85;
+    numberInputAhorro.max = val * 0.5;
     numberInputAhorro.value = val * 0.165;
     document.getElementById("ahorroMin").innerText = currencyFormatter.format(
       Math.round(val * 0.165)
     );
     document.getElementById("ahorroMax").innerText = currencyFormatter.format(
-      Math.round(val * 0.85)
+      Math.round(val * 0.5)
     );
   }
 
