@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="frontend.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="form" class="calculadora-container">
+      <div class="header-calculadora">
+        <h1>Calculadora ¿Cuando puedo comprar mi vivienda?</h1>
+
+        <h2>
+          Cuanto me financian- aquí alguna información personal para calcular el
+          valor a financiar
+        </h2>
+      </div>
+      <div class="card">
+        <div class="input-group">
+          <label for="progress">
+            ¿Cuanto son los ingresos mensuales del Hogar?
+          </label>
+          <div class="input-wrapper error">
+            <div class="icon">$</div>
+            <input
+              class="input"
+              id="ingresosInput"
+              onkeyup="myInputFormat(event,this.id);"
+              placeholder="Ingresos mensuales"
+              type="text"
+              required
+            />
+            <!-- Limitar entre el 16.4% ---- 85% -->
+          </div>
+          <div class="input-error">
+            <p>Este campo es requerido</p>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="progress"> ¿Cuanto tengo de cuota inicial? </label>
+          <div class="input-wrapper">
+            <div class="icon">$</div>
+            <input
+              class="input"
+              placeholder="Cuota inicial"
+              type="text"
+              onkeyup="myInputFormat(event,this.id);"
+              id="cuotaInicialInput"
+              required
+            />
+          </div>
+
+          <div class="input-error">
+            <p>Este campo es requerido</p>
+          </div>
+        </div>
+
+        <!-- <div class="input-group">
+          <label for="progress">
+            ¿Cual es tu presupuesto para la vivienda que quieres?
+          </label>
+          <div class="input-wrapper">
+            <div class="icon">$</div>
+            <input
+              class="input"
+              placeholder="Cuota inicial"
+              type="text"
+              onkeyup="myInputFormat(event,this.id);"
+              id="ahorroInput"
+              required
+            />
+          </div>
+
+          <div class="input-error">
+            <p>Este campo es requerido</p>
+          </div>
+        </div> -->
+      </div>
+      <!-- <div class="card">
+        <p class="card-header">Comparemos</p>
+        <div class="input-group">
+          <label for="percentage"
+            >¿Cuál es el % de la tasa de financiación de la hipoteca con el
+            banco?</label
+          >
+          <div class="input-wrapper">
+            <div class="icon">%</div>
+            <select class="input" placeholder="Escoge tu tasa">
+              <option value="" class="placeholder" selected disabled hidden>
+                Elige tu tasa
+              </option>
+              <option value="">13%</option>
+            </select>
+          </div>
+        </div>
+      </div> -->
+      <button class="btn-submit" id="submitBtn" type="submit" disabled>
+        Calcular
+      </button>
+    </form>
+    <div
+      class="calculadora-container resultados"
+      style="display: none"
+      id="resultados"
+    >
+      <div onclick="regresar()" width="24" height="24" class="arrowback">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z"
+            fill="#323232"
+          />
+        </svg>
+      </div>
+
+      <div class="card-contourn main">
+        <p>Puedes <b>comprar</b> una vivienda de este valor:</p>
+
+        <h2 id="viviendaAComprar"></h2>
+      </div>
+
+      <div class="card gastos-resultados">
+        <div class="chart" id="chart"></div>
+      </div>
+      <div class="card ideal">
+        <p>¿Este valor es suficiente para comprar tu casa ideal?</p>
+        <select id="suficiente">
+          <option>Selecciona tu respuesta</option>
+          <option>Si</option>
+          <option>No</option>
+        </select>
+      </div>
+      <div class="table">
+        <div class="title">Entidad</div>
+        <div class="title">Años financiación</div>
+        <div class="title">Cuota mensual</div>
+        <div class="value val-nuestro">Nuestro</div>
+        <div class="value val-nuestro">20 años</div>
+        <div class="value val-nuestro" id="cuotaMensualNS"></div>
+        <div class="value">Hipoteca</div>
+        <div class="value">20 años</div>
+        <div class="value" id="cuotaMensualHip"></div>
+      </div>
+
+      <div class="card-aclaraciones">
+        <p class="alert">
+          Recuerda los bancos exigen una cuota inicial del 30% mas los costosos
+          de escrituración (3%).
+        </p>
+        <hr />
+        <p class="normal">Necesitas <b id="necesitasHip"> </b> ahorrados</p>
+
+        <p class="aclaratoria">
+          *Este calculo tiene en cuenta un financiamiento de (<span
+            id="financiamientoPercentage"
+          ></span
+          >) con una tasa a <span id="tasa"></span> a
+          <span id="term"></span> años
+        </p>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="frontend.js"></script>
+  </body>
+</html>
