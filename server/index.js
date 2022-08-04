@@ -128,11 +128,11 @@ app.post("/cuantoMePrestan", (req, res, next) => {
 });
 
 app.post("/cuandoPuedoComprar", (req, res, next) => {
-    const { propertyValue, monthlyIncome, savingsAvailable, monthlySavings, inWhenToBuy } =
+    const { propertyValue, savingsAvailable, monthlySavings, inWhenToBuy } =
         req.body;
     let inWhenToBuyDate = new Date(inWhenToBuy);
     let result = calculateCuandoPuedoComprar(
-        propertyValue, monthlyIncome, savingsAvailable, monthlySavings, inWhenToBuyDate
+        propertyValue, savingsAvailable, monthlySavings, inWhenToBuyDate
     );
     res.send({ success: true, result });
 });
@@ -147,8 +147,8 @@ app.post("/costosMensuales", (req, res, next) => {
     res.send({ success: true, result });
 });
 
-function calculateCuandoPuedoComprar(propertyValue, monthlyIncome, savingsAvailable, monthlySavings, inWhenToBuy) {
-    let ahorroOptimo = monthlyIncome * howMuchSavingsPercentage;
+function calculateCuandoPuedoComprar(propertyValue, savingsAvailable, monthlySavings, inWhenToBuy) {
+    // let ahorroOptimo = monthlyIncome * howMuchSavingsPercentage;
     const diffTime = Math.abs(inWhenToBuy - new Date());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -157,50 +157,50 @@ function calculateCuandoPuedoComprar(propertyValue, monthlyIncome, savingsAvaila
     //+REDONDEAR(MAX(($C$4*(1-H5)*(1+H7)*H6-$C$9)/$C$11,0),0)
     let nuestroMesAhorroActual = Math.round(Math.max((propertyValue * (1 - nsDiscuntPercentage) * (1 + nsComissionPercentage) * nsSavingsPercentage - savingsAvailable) / monthlySavings, 0));
     // +REDONDEAR(MAX(($C$4*(1-H5)*(1+H7)*H6-$C$9)/($C$7*$H$17),0),0)
-    let nuestroMesesAhorroOptimo = Math.round(Math.max((propertyValue * (1 - nsDiscuntPercentage) * (1 + nsComissionPercentage) * nsSavingsPercentage - savingsAvailable) / (ahorroOptimo), 0));
+    // let nuestroMesesAhorroOptimo = Math.round(Math.max((propertyValue * (1 - nsDiscuntPercentage) * (1 + nsComissionPercentage) * nsSavingsPercentage - savingsAvailable) / (ahorroOptimo), 0));
 
-    console.log("NUESTRO:", nuestroAhorro, nuestroMesAhorroActual, nuestroMesesAhorroOptimo)
+    console.log("NUESTRO:", nuestroAhorro, nuestroMesAhorroActual)
 
     //+MAX(($C$4*(H13+H14+H15)-$C$9)/(($C$28-HOY())/30),0)
     let hipotecaAhorro = Math.round(Math.max((propertyValue * (hiComissionPercentage + hiDiscuntPercentage + hiSavingsPercentage) - savingsAvailable) / (diffDays / 30), 0));
     //+REDONDEAR(MAX(($C$4*(H13+H14+H15)-$C$9)/$C$11,0),0)
     let hipotecaMesAhorroActual = Math.round(Math.max((propertyValue * (hiComissionPercentage + hiDiscuntPercentage + hiSavingsPercentage) - savingsAvailable) / monthlySavings, 0));
     //+REDONDEAR(MAX(($C$4*(H13+H14+H15)-$C$9)/($C$7*$H$17),0),0)
-    let hipotecaMesesAhorroOptimo = Math.round(Math.max((propertyValue * (hiComissionPercentage + hiDiscuntPercentage + hiSavingsPercentage) - savingsAvailable) / ahorroOptimo, 0));;
+    // let hipotecaMesesAhorroOptimo = Math.round(Math.max((propertyValue * (hiComissionPercentage + hiDiscuntPercentage + hiSavingsPercentage) - savingsAvailable) / ahorroOptimo, 0));;
 
-    console.log("HIPOTECA:", hipotecaAhorro, hipotecaMesAhorroActual, hipotecaMesesAhorroOptimo)
-
-
-    //+MAX(($C$4*H9-$C$9)/((C28-HOY())/30),0)
-    let leasingAhorro = Math.round(Math.max((propertyValue * lsSavingsPercentage - savingsAvailable) / (diffDays / 30), 0));
-    //MAX(($C$4*(H9+H10)-$C$9)/$C$11,0)
-    let leasingMesAhorroActual = Math.round(Math.max((propertyValue * (lsSavingsPercentage + lsInitialEstructation) - savingsAvailable) / monthlySavings, 0));
-    //+REDONDEAR(MAX(($C$4*(H9+H10)-$C$9)/($C$7*$H$17),0),0)
-    let leasingMesesAhorroOptimo = Math.round(Math.max((propertyValue * (lsSavingsPercentage + lsInitialEstructation) - savingsAvailable) / ahorroOptimo, 0));
-
-    console.log("LEASING:", leasingAhorro, leasingMesAhorroActual, leasingMesesAhorroOptimo)
+    console.log("HIPOTECA:", hipotecaAhorro, hipotecaMesAhorroActual)
 
 
-    let resultado = [
-        {
+    // //+MAX(($C$4*H9-$C$9)/((C28-HOY())/30),0)
+    // let leasingAhorro = Math.round(Math.max((propertyValue * lsSavingsPercentage - savingsAvailable) / (diffDays / 30), 0));
+    // //MAX(($C$4*(H9+H10)-$C$9)/$C$11,0)
+    // let leasingMesAhorroActual = Math.round(Math.max((propertyValue * (lsSavingsPercentage + lsInitialEstructation) - savingsAvailable) / monthlySavings, 0));
+    // //+REDONDEAR(MAX(($C$4*(H9+H10)-$C$9)/($C$7*$H$17),0),0)
+    // let leasingMesesAhorroOptimo = Math.round(Math.max((propertyValue * (lsSavingsPercentage + lsInitialEstructation) - savingsAvailable) / ahorroOptimo, 0));
+
+    // console.log("LEASING:", leasingAhorro, leasingMesAhorroActual, leasingMesesAhorroOptimo)
+
+
+    let resultado = {
+       nuestro: {
             name: "Nuestro",
             nuestroAhorro,
             nuestroMesAhorroActual,
-            nuestroMesesAhorroOptimo,
+            // nuestroMesesAhorroOptimo,
         },
-        {
+       hipoteca: {
             name: "Hipoteca",
             hipotecaAhorro,
             hipotecaMesAhorroActual,
-            hipotecaMesesAhorroOptimo,
+            // hipotecaMesesAhorroOptimo,
         },
-        {
-            name: "Leasing",
-            leasingAhorro,
-            leasingMesAhorroActual,
-            leasingMesesAhorroOptimo,
-        }
-    ]
+        // {
+        //     name: "Leasing",
+        //     leasingAhorro,
+        //     leasingMesAhorroActual,
+        //     leasingMesesAhorroOptimo,
+        // }
+    }
 
     return resultado;
 }
