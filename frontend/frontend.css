@@ -156,6 +156,13 @@ body,
   height: auto;
   padding: 10px 16px;
 }
+.hipoteca-result{
+  padding:0 16px;
+  height: 100%;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+}
 
 .header-calculadora {
 
