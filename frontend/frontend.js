@@ -151,7 +151,7 @@ function fetchValues(e) {
       document.getElementById("ahoorroConNuestro").innerText =
         currencyFormatter.format(
           Math.floor(
-            resultado.hip.cuotaTotalHip - resultado.nuestro.totalMinimumPayment
+            resultado.hip.cuotaHip - resultado.nuestro.totalMinimumPayment
           )
         );
 
