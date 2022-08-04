@@ -21,27 +21,29 @@
         <div class="input-group">
           <label for="progress"> Precio del apartamento (Pesos COP) </label>
           <div class="input-wrapper error">
-            <div class="icon"></div>
+            <div class="icon">$</div>
             <input
               class="input"
               id="progressNumber"
+              onkeyup="myInputFormat(event,this.id);"
               placeholder="Precio entre 100,000,000-500,000,000"
-              type="number"
+              type="text"
               min="100000000"
               max="500000000"
               required
-              oninput="range.value=value"
+              oninput="rangeNumber.value=removeCommas(value)"
             />
+            <!-- Limitar entre el 16.4% ---- 85% -->
           </div>
           <input
             type="range"
-            id="range"
+            id="rangeNumber"
             value="100000000"
             min="100000000"
             max="500000000"
             step="10000000"
             required
-            oninput="progressNumber.value=value"
+            oninput="progressNumber.value=addCommas(value)"
           />
           <div class="progress-points">
             <p>100.000.000</p>
@@ -54,13 +56,30 @@
         <div class="input-group">
           <label for="progress"> ¿Cuanto tienes ahorrado? </label>
           <div class="input-wrapper">
-            <div class="icon"></div>
+            <div class="icon">$</div>
             <input
               class="input"
               placeholder="Ahorro para el inmueble"
-              type="number"
+              type="text"
+              onkeyup="myInputFormat(event,this.id);"
               id="ahorroInput"
+              required
+              oninput="rangeAhorro.value=removeCommas(value)"
             />
+          </div>
+          <input
+            type="range"
+            min="100000000"
+            max="500000000"
+            value="100000000"
+            id="rangeAhorro"
+            step="500000"
+            required
+            oninput="ahorroInput.value=addCommas(value)"
+          />
+          <div class="progress-points">
+            <p id="ahorroMin">100.000.000</p>
+            <p id="ahorroMax">500.000.000</p>
           </div>
           <div class="input-error">
             <p>Este campo es requerido (min100M, max 500M)</p>
@@ -172,14 +191,14 @@
         </div>
       </div>
       <div class="grafica hip">
-        <div id="costoFinancieroHip" class="costoFinanciero"></div>
-        <div id="aporteCapitalHip" class="aporteCapital"></div>
-        <div id="gastosHip" class="gastos"></div>
+        <div id="costoFinancieroHip" class="costoFinanciero normal-hip"></div>
+        <div id="aporteCapitalHip" class="aporteCapital azul-hip"></div>
+        <div id="gastosHip" class="gastos verde-hip"></div>
       </div>
       <div class="grafica-labels hip">
         <div class="fila">
           <div class="grafica-label-wrapper-text">
-            <div class="dot"></div>
+            <div class="dot normal-hip"></div>
             <p>Costo financiero</p>
           </div>
           <p><span id="costoFinancieroHipValue"></span></p>
@@ -187,14 +206,14 @@
 
         <div class="fila">
           <div class="grafica-label-wrapper-text">
-            <div class="dot azul"></div>
+            <div class="dot azul-hip"></div>
             <p>Gastos</p>
           </div>
           <p><span id="gastosHipValue"></span></p>
         </div>
         <div class="fila">
           <div class="grafica-label-wrapper-text">
-            <div class="dot verde"></div>
+            <div class="dot verde-hip"></div>
             <p>Aporte a capital (obligatorio)</p>
           </div>
           <p><span id="aporteACapitalHipValue"></span></p>
@@ -224,6 +243,7 @@
         </p>
       </div>
     </div>
+
     <script src="frontend.js"></script>
   </body>
 </html>

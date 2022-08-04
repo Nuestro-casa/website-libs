@@ -38,10 +38,11 @@ function fetchValues(e) {
   document.getElementById("submitBtn").style.background =
     "rgba(253, 218, 197, 1)";
   consulta = {
-    precio: +document.getElementById("progressNumber").value,
-    ahorro: +document.getElementById("ahorroInput").value,
+    precio: +removeCommas(document.getElementById("progressNumber").value),
+    ahorro: +removeCommas(document.getElementById("ahorroInput").value),
   };
   let url = "https://nuestro-calculadoras-live.herokuapp.com/costosMensuales";
+
   fetch(url, {
     method: "POST",
 
@@ -49,8 +50,8 @@ function fetchValues(e) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      precio: +document.getElementById("progressNumber").value,
-      ahorro: +document.getElementById("ahorroInput").value,
+      precio: +removeCommas(document.getElementById("progressNumber").value),
+      ahorro: +removeCommas(document.getElementById("ahorroInput").value),
     }),
   })
     .then((el) => el.json())
@@ -81,7 +82,7 @@ function fetchValues(e) {
           )
         );
       document.getElementById("pagoMensualFijoHip").innerText =
-        currencyFormatter.format(Math.floor(resultado.hip.cuotaTotalHip));
+        currencyFormatter.format(Math.floor(resultado.hip.cuotaHip));
       document.getElementById("costoFinancieroHipValue").innerText =
         currencyFormatter.format(
           Math.floor(resultado.hip.interesHip + resultado.hip.segurosHip)
@@ -168,28 +169,135 @@ function fetchValues(e) {
 
 window.onload = () => {
   //SINCRONIZAR RANGE y INPUT
-  const rangeInputs = document.querySelectorAll('input[type="range"]');
-  const numberInput = document.querySelector("#progressNumber");
+  const rangeInputsPrecio = document.querySelectorAll("#rangeNumber");
+  const numberInputPrecio = document.querySelector("#progressNumber");
+  const rangeInputsAhorro = document.querySelectorAll("#rangeAhorro");
+  const numberInputAhorro = document.querySelector("#ahorroInput");
 
-  function handleInputChange(e) {
+  function handleInputChangePrecio(e) {
     let target = e.target;
     if (e.target.type !== "range") {
-      target = document.getElementById("range");
+      target = document.getElementById("rangeNumber");
     }
     const min = target.min;
     const max = target.max;
-    const val = target.value;
+    const val = removeCommas(target.value);
+    target.style.backgroundSize = ((val - min) * 100) / (max - min) + "% 100%";
 
+    rangeInputsAhorro.forEach((e) => {
+      e.min = val * 0.165;
+      e.max = val * 0.85;
+      e.value = val * 0.165;
+      e.style.backgroundSize =
+        ((e.value - e.min) * 100) / (e.max - e.min) + "% 100%";
+    });
+    numberInputAhorro.min = val * 0.165;
+    numberInputAhorro.max = val * 0.85;
+    numberInputAhorro.value = val * 0.165;
+    document.getElementById("ahorroMin").innerText = currencyFormatter.format(
+      Math.round(val * 0.165)
+    );
+    document.getElementById("ahorroMax").innerText = currencyFormatter.format(
+      Math.round(val * 0.85)
+    );
+  }
+
+  rangeInputsPrecio.forEach((input) => {
+    input.addEventListener("input", handleInputChangePrecio);
+  });
+
+  numberInputPrecio.addEventListener("input", handleInputChangePrecio);
+
+  function handleInputChangeAhorro(e) {
+    let target = e.target;
+    if (e.target.type !== "range") {
+      target = document.getElementById("rangeAhorro");
+    }
+    const min = target.min;
+    const max = target.max;
+    const val = removeCommas(target.value);
     target.style.backgroundSize = ((val - min) * 100) / (max - min) + "% 100%";
   }
 
-  rangeInputs.forEach((input) => {
-    input.addEventListener("input", handleInputChange);
+  rangeInputsAhorro.forEach((input) => {
+    input.addEventListener("input", handleInputChangeAhorro);
   });
 
-  numberInput.addEventListener("input", handleInputChange);
+  numberInputAhorro.addEventListener("input", handleInputChangeAhorro);
+
   const form = document.getElementById("form");
   form.addEventListener("change", () => {
     document.getElementById("submitBtn").disabled = !form.checkValidity();
   });
 };
+
+function addCommas(x) {
+  var parts = x.toString().split(".");
+  parts[0] = parts[0]
+    .replace(/^0+/, "")
+    .replace(/\D/g, "")
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
+}
+function removeCommas(str) {
+  my_str_without_comma = str.toString().replaceAll(",", "");
+  return parseInt(my_str_without_comma);
+}
+function myInputFormat(evtobj, id) {
+  /*
+       if (evtobj.keyCode == 75 && evtobj.ctrlKey) {
+
+    }
+    */
+  var val = document.getElementById(id).value;
+  document.getElementById(id).value = addCommas(val);
+}
+
+function validateMinimumInitialFee() {
+  var initialFeeObject = document.getElementById("ahorroInput");
+  var min = initialFeeObject.min;
+  var value = removeCommas(initialFeeObject.value);
+
+  if (value < min) {
+    //alert("la cuota minima es: "+min)
+    initialFeeObject.value = "";
+  }
+}
+
+function validateMaximumInitialFee() {
+  var priceObject = document.getElementById("price");
+  var rateObject = document.getElementById("rate");
+  var initialFeeObject = document.getElementById("initialfee");
+  var price = removeCommas(priceObject.value); // C36
+  var initialFee = removeCommas(initialFeeObject.value); // C38
+  var rate = rateObject.value / 100; // C40
+
+  porcentage = (price * GLOBAL_VARS.maxIntialFeePercentage) / 100;
+
+  if (initialFee > porcentage) {
+    //alert("la cuota minima es: "+min)
+    initialFeeObject.value = "";
+  }
+}
+
+function fifteenPercent() {
+  var priceObject = document.getElementById("price");
+  var rateObject = document.getElementById("rate");
+  var initialFeeObject = document.getElementById("initialfee");
+  var result = 0;
+
+  var price = removeCommas(priceObject.value);
+
+  if (price) {
+    result = (price * GLOBAL_VARS.intialFeePercentage) / 100;
+    initialFeeObject.placeholder = "Minimo: $" + addCommas(result);
+    initialFeeObject.min = (price * GLOBAL_VARS.intialFeePercentage) / 100;
+  } else {
+    removeFifteenPercent();
+  }
+}
+
+function validateInitialFee() {
+  validateMinimumInitialFee();
+  validateMaximumInitialFee();
+}

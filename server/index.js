@@ -118,12 +118,10 @@ app.get("/", (req, res) => {
 });
 
 app.post("/cuantoMePrestan", (req, res, next) => {
-    const { monthlyIncomeObject, rateObject, termObject, initialFeeObject } =
+    const { monthlyIncomeObject, initialFeeObject } =
         req.body;
     let result = calculateCuantoMePrestan(
         monthlyIncomeObject,
-        rateObject,
-        termObject,
         initialFeeObject
     );
     res.send({ success: true, result });
@@ -356,85 +354,147 @@ function PMT(ir, np, pv, fv, type) {
     return pmt;
 }
 
-
-
-function calculateCuantoMePrestan(
-    monthlyIncomeObject,
-    rateObject,
-    termObject,
-    initialFeeObject
-) {
+function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
     ////Initial Variables
-    // var monthlyIncomeObject = document.getElementById("monthlyIncome");
-    // var rateObject = document.getElementById("rate");
-    // var termObject = document.getElementById("term");
-    // var initialFeeObject = document.getElementById("initialFee");
-    var maximumValueMortgagePaymentObject = monthlyIncomeObject * (30 / 100);
-    var va = 0;
-    var nuestro = 0;
-    var hipoteca = 0;
-    var leasing = 0;
-
-    //TODO Cambiar a Variables globales 
-    //Nuestro fee con escrituracion se financia PROBLEMA 1
-    //
-    let nstroFee = 0.15
-    let leasingFee = 0.225
-    let hipotecaFee = 0.325
-
-
-    termObject = termObject * 12;
-
-    rateObject = rateObject / 12;
-
-    for (var i = 1; i <= termObject; i++) {
-        va += (maximumValueMortgagePaymentObject) / (Math.pow((1 + rateObject), i));
+  
+    var usableSalary = 0.9;
+    var salaryForRent = 0.35;
+    var salaryForSavings = 0.1;
+    var estimateTxCost = 0.0323;
+    var maximunFeePercentage = (salaryForRent + salaryForSavings) * usableSalary;
+    var maximunFee = maximunFeePercentage * monthlyIncomeObject;
+    var bankMaximunAparmentValue = initialFeeObject / (0.3 + estimateTxCost);
+    var nuestroMaximunAparmentValue = 0;
+    var rate = 0.15;
+    var difference = 1;
+    var totalTxValue = 0;
+    var valorApto = 0;
+    var rentaMinima = 0;
+    var leaseRate = 0.1153;
+    var savePercentage = 0;
+    var save = 0;
+    var cuotaTotal;
+    var salarioRequerido = 0;
+    while (difference > 0) {
+      totalTxValue = initialFeeObject / rate;
+      valorApto = totalTxValue / 1.1;
+      rentaMinima = leaseRate * (valorApto * (1 - rate)) / 12;
+      savePercentage = (rate == 0.15) ? 0.001878 : (roundToTwo(rate) == 0.16) ? 0.001689 : (roundToTwo(rate) == 0.17) ? 0.001502 : (roundToTwo(rate) == 0.18) ? 0.001315 : (roundToTwo(rate) == 0.19) ? 0.001126 : (roundToTwo(rate) == 0.20) ? 0.000939 : (roundToTwo(rate) == 0.21) ? 0.000752 : (roundToTwo(rate) == 0.22) ? 0.000563 : (roundToTwo(rate) == 0.23) ? 0.000375 : (roundToTwo(rate) == 0.24) ? 0.000187 : (roundToTwo(rate) >= 0.25) ? 0.00 : 0.00;
+      save = valorApto * savePercentage;
+      cuotaTotal = save + rentaMinima;
+      salarioRequerido = cuotaTotal / maximunFeePercentage;
+      difference = salarioRequerido - monthlyIncomeObject;
+      nuestroMaximunAparmentValue = valorApto;
+      rate += 0.01;
     }
-
-    nuestro = Math.min(Math.max(va + initialFeeObject, va / (1 - nstroFee)), initialFeeObject / nstroFee);
-    console.log("Nuestro: " + Math.round(nuestro));
-
-    leasing = Math.min(Math.max(va + initialFeeObject, va / (1 - leasingFee)), initialFeeObject / leasingFee);
-    console.log("Leasing: " + Math.round(leasing));
-
-    hipoteca = Math.min(Math.max(va + initialFeeObject, va / (1 - hipotecaFee)), initialFeeObject / hipotecaFee);
-    console.log("Hipoteca: " + Math.round(hipoteca));
-
-    console.log("Cuanto me prestan " + va);
-
-
+  
+    console.log("Cuanto me prestan BANCO: " + bankMaximunAparmentValue);
+    console.log("Cuanto me prestan NUESTRO: " + nuestroMaximunAparmentValue);
+  
+    
     // Comenzamos a graficar
     var name = "Cuanto me prestan";
     var data = [
-        {
-            name: "Valor Maximo Hipoteca",
-            value: maximumValueMortgagePaymentObject,
-        },
-        {
-            name: "NUESTRO",
-            value: nuestro,
-        },
-        {
-            name: "Hipoteca",
-            value: hipoteca,
-        },
-        {
-            name: "Leasing",
-            value: leasing,
-        },
+      {
+        name: "NUESTRO",
+        value: nuestroMaximunAparmentValue,
+      },
+      {
+        name: "BANCO",
+        value: bankMaximunAparmentValue,
+      },
     ];
+  
+    return data
+
+  }
+  
+  function roundToTwo(num) {
+    return +(Math.round(num + "e+2")  + "e-2");
+  }
 
 
-    return data;
 
-    // var div = "graphic";
-    // graphResults(div, name, data);
 
-    // // Generamos resultados generales
-    // createResult(data);
 
-    // createFinePrint();
-}
+
+// function calculateCuantoMePrestan(
+//     monthlyIncomeObject,
+//     rateObject,
+//     termObject,
+//     initialFeeObject
+// ) {
+//     ////Initial Variables
+//     // var monthlyIncomeObject = document.getElementById("monthlyIncome");
+//     // var rateObject = document.getElementById("rate");
+//     // var termObject = document.getElementById("term");
+//     // var initialFeeObject = document.getElementById("initialFee");
+//     var maximumValueMortgagePaymentObject = monthlyIncomeObject * (30 / 100);
+//     var va = 0;
+//     var nuestro = 0;
+//     var hipoteca = 0;
+//     var leasing = 0;
+
+//     //TODO Cambiar a Variables globales 
+//     //Nuestro fee con escrituracion se financia PROBLEMA 1
+//     //
+//     let nstroFee = 0.15
+//     let leasingFee = 0.225
+//     let hipotecaFee = 0.325
+
+
+//     termObject = termObject * 12;
+
+//     rateObject = rateObject / 12;
+
+//     for (var i = 1; i <= termObject; i++) {
+//         va += (maximumValueMortgagePaymentObject) / (Math.pow((1 + rateObject), i));
+//     }
+
+//     nuestro = Math.min(Math.max(va + initialFeeObject, va / (1 - nstroFee)), initialFeeObject / nstroFee);
+//     console.log("Nuestro: " + Math.round(nuestro));
+
+//     leasing = Math.min(Math.max(va + initialFeeObject, va / (1 - leasingFee)), initialFeeObject / leasingFee);
+//     console.log("Leasing: " + Math.round(leasing));
+
+//     hipoteca = Math.min(Math.max(va + initialFeeObject, va / (1 - hipotecaFee)), initialFeeObject / hipotecaFee);
+//     console.log("Hipoteca: " + Math.round(hipoteca));
+
+//     console.log("Cuanto me prestan " + va);
+
+
+//     // Comenzamos a graficar
+//     var name = "Cuanto me prestan";
+//     var data = [
+//         {
+//             name: "Valor Maximo Hipoteca",
+//             value: maximumValueMortgagePaymentObject,
+//         },
+//         {
+//             name: "NUESTRO",
+//             value: nuestro,
+//         },
+//         {
+//             name: "Hipoteca",
+//             value: hipoteca,
+//         },
+//         {
+//             name: "Leasing",
+//             value: leasing,
+//         },
+//     ];
+
+
+//     return data;
+
+//     // var div = "graphic";
+//     // graphResults(div, name, data);
+
+//     // // Generamos resultados generales
+//     // createResult(data);
+
+//     // createFinePrint();
+// }
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

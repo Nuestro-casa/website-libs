@@ -457,7 +457,7 @@ input[type="range"]::-ms-track {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 100vh;
+
 }
 
 .resultados h2 {
@@ -743,6 +743,16 @@ input[type="range"]::-ms-track {
 
   background: rgba(253, 218, 197, 1);
 
+}
+
+.dot.normal-hip{
+  background-color: rgba(182, 202, 231, 1);
+}
+.dot.azul-hip{
+  background-color: rgba(188, 215, 251, 1);
+}
+.dot.verde-hip{
+  background-color: rgba(145, 230, 127, 1);
 }
 
 .card-hip h2 {
