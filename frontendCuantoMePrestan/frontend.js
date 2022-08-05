@@ -19,6 +19,7 @@ function regresar() {
 }
 var consulta;
 var resultado;
+var resultado2;
 document.getElementById("form").addEventListener("submit", fetchValues);
 function fetchValues(e) {
   e.preventDefault();
@@ -46,10 +47,28 @@ function fetchValues(e) {
   })
     .then((el) => el.json())
     .then((el) => {
+      resultado = el;
+      let url =
+        "https://nuestro-calculadoras-live.herokuapp.com/costosMensuales";
+
+      return fetch(url, {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          precio: resultado.nuestro.value,
+          ahorro: consulta.initialFeeObject,
+        }),
+      });
+    })
+    .then((el) => el.json())
+    .then((el) => {
       document.getElementById("submitBtn").innerText = "CALCULAR";
       document.getElementById("submitBtn").disabled = false;
       document.getElementById("submitBtn").style.background = "#E27758";
-      resultado = el.result;
+      resultado2 = el.result;
 
       var options = {
         dataLabels: {
@@ -132,8 +151,12 @@ function fetchValues(e) {
       document.getElementById("viviendaAComprar").innerText =
         currencyFormatter.format(Math.floor(resultado.nuestro.value));
 
-      document.getElementById("cuotaMensualNS").innerText = "No se que poner";
-      document.getElementById("cuotaMensualHip").innerText = "No se que poner";
+      document.getElementById("cuotaMensualNS").innerText =
+        currencyFormatter.format(
+          Math.floor(resultado2.nuestro.totalMinimumPayment)
+        );
+      document.getElementById("cuotaMensualHip").innerText =
+        currencyFormatter.format(Math.floor(resultado2.hip.cuotaHip));
 
       document.getElementById("form").style.display = "none";
       document.getElementById("resultados").style.display = "flex";
