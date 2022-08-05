@@ -982,17 +982,73 @@ padding: 8px;
 gap: 8px;
 }
 
+.card.graphic{
+  border: none;
+  background: #FFFFFF;
+box-shadow: 0px 45px 112px rgba(0, 0, 0, 0.06), 0px 9px 18.2px rgba(0, 0, 0, 0.03), 0px 1.96875px 6.475px rgba(0, 0, 0, 0.0195);
+border-radius: 10px;
+}
 .graph{
   position: relative;
   height: 45px;
   width: 100%;
-  background-color: rgba(10, 207, 131, 1);
+  margin-top: 14px;
+}
+.graph.nsContainer{
+  width: 218px;
 }
 .graph .name{
   position: absolute;
   width: 106px;
+  height: 100%;
+  border-radius: 22.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+font-size: 14px;
+line-height: 19px;
+/* identical to box height */
+
+
+color: #FFFFFF;
+z-index: 1;
+
+  background-color: rgba(10, 207, 131, 1);
+}
+.graph .behind{
+  background: rgba(10, 207, 131, 0.2);
+  height: 100%;
+  width: 100%;
+  border-radius: 22.5px;
+  position: absolute;
+  z-index: 1;
 }
 .graph .time{
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   right: 0;
+  z-index: 3;
+  background: #FFFFFF;
+box-shadow: 0px 2px 6px rgba(10, 207, 131, 0.16);
+border-radius: 14px;
+height: 28px;
+top: 50%;
+transform: translateY(-50%);
+right: 8px;
+font-weight: 700;
+font-size: 12px;
+line-height: 16px;
+padding: 7px 6px;
+}
+
+.graph.hipContainer .name{
+  background-color: rgba(80, 81, 249, 1);
+  z-index: 2;
+}
+.graph.hipContainer .behind{
+  z-index: 1;
+background-color: rgba(210, 211, 248, 1);
 }

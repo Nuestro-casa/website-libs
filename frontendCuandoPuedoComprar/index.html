@@ -63,7 +63,7 @@
             <div class="icon">$</div>
             <input
               class="input"
-              placeholder="Cuota inicial"
+              placeholder="Ahorro para el inmueble"
               type="text"
               onkeyup="myInputFormat(event,this.id);"
               id="cuotaInicialInput"
@@ -82,7 +82,7 @@
             <div class="icon">$</div>
             <input
               class="input"
-              placeholder="Cuota inicial"
+              placeholder="Ahorro mensual"
               type="text"
               onkeyup="myInputFormat(event,this.id);"
               id="ahorroMensualInput"
@@ -94,8 +94,8 @@
             <p>Este campo es requerido</p>
           </div>
         </div>
-
-        <div class="input-group">
+        <!-- PERIODO PARA AHORRAR -->
+        <!-- <div class="input-group">
           <label for="progress"> ¿Cuanto ahorras mensualmente? </label>
           <div class="input-wrapper">
             <div class="icon">
@@ -123,7 +123,8 @@
           <div class="input-error">
             <p>Este campo es requerido</p>
           </div>
-        </div>
+        </div> -->
+        <!-- PROGRESS -->
         <!-- <div class="input-group">
           <label for="progress">
             ¿Cual es tu presupuesto para la vivienda que quieres?
@@ -192,14 +193,14 @@
 
         <h2 id="viviendaAComprar"></h2>
       </div>
-      <div class="card">
+      <div class="card graphic">
         <p>Puede ser <b>tuya</b> en:</p>
-        <div class="graph nsContainer">
+        <div class="graph nsContainer" id="nsContainer">
           <div class="name">Nuestro</div>
           <div class="behind"></div>
           <div class="time" id="nuestroTime"></div>
         </div>
-        <div class="graph hipContainer">
+        <div class="graph hipContainer" id="hipContainer">
           <div class="name">Hipoteca</div>
           <div class="behind"></div>
           <div class="time" id="hipTime"></div>

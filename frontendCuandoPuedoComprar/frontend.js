@@ -27,12 +27,12 @@ const monthNames = [
 ];
 var percentageFormatter = new Intl.NumberFormat("en-US", option);
 
-const elem = document.querySelector('input[data-type="date"]');
-const datepicker = new Datepicker(elem, {
-  language: "es",
-  minDate: new Date(),
-  autohide: true,
-});
+// const elem = document.querySelector('input[data-type="date"]');
+// const datepicker = new Datepicker(elem, {
+//   language: "es",
+//   minDate: new Date(),
+//   autohide: true,
+// });
 
 function regresar() {
   document.getElementById("form").style.display = "block";
@@ -57,7 +57,7 @@ function fetchValues(e) {
     monthlySavings: +removeCommas(
       document.getElementById("ahorroMensualInput").value
     ),
-    inWhenToBuy: datepicker.getDate("m/dd/yyyy"),
+    // inWhenToBuy: datepicker.getDate("m/dd/yyyy"),
   };
 
   let url =
@@ -100,6 +100,15 @@ function fetchValues(e) {
           today.getMonth() + resultado.hipoteca.hipotecaMesAhorroActual
         )
       );
+
+      //Check si ambos son para el mismo periodo
+      if (
+        nsDate.getMonth() == hipDate.getMonth() &&
+        nsDate.getFullYear() == hipDate.getFullYear()
+      ) {
+        document.getElementById("nsContainer").style.width = "100%";
+      }
+
       document.getElementById("nuestroTime").innerText =
         monthNames[nsDate.getMonth()] + " " + nsDate.getFullYear();
       document.getElementById("hipTime").innerText =
@@ -134,7 +143,6 @@ window.onload = () => {
 
   const form = document.getElementById("form");
   form.addEventListener("change", () => {
-    console.log(datepicker.getDate());
     // if (datepicker.getDate()) {
     document.getElementById("submitBtn").disabled = !form.checkValidity();
     // }
