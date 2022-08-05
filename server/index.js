@@ -153,16 +153,23 @@ function calculateCuandoPuedoComprar(propertyValue, savingsAvailable, monthlySav
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     //+MAX(($C$4*(1-H5)*(1+H7)*H6-$C$9)/((C28-HOY())/30),0)
-    let nuestroAhorro = Math.round(Math.max((propertyValue * (1 - nsDiscuntPercentage) * (1 + nsComissionPercentage) * nsSavingsPercentage - savingsAvailable) / (diffDays / 30), 0));
+    // let nuestroAhorro = Math.round(Math.max((propertyValue * (1 - nsDiscuntPercentage) * (1 + nsComissionPercentage) * nsSavingsPercentage - savingsAvailable) / (diffDays / 30), 0));
     //+REDONDEAR(MAX(($C$4*(1-H5)*(1+H7)*H6-$C$9)/$C$11,0),0)
+    let nsTotalTransaction = propertyValue  * 1.1;
+    let requiredDownPayment = nsTotalTransaction * 0.15;
+    let nuestroAhorro = requiredDownPayment - savingsAvailable;
     let nuestroMesAhorroActual = Math.round(Math.max((propertyValue * (1 - nsDiscuntPercentage) * (1 + nsComissionPercentage) * nsSavingsPercentage - savingsAvailable) / monthlySavings, 0));
     // +REDONDEAR(MAX(($C$4*(1-H5)*(1+H7)*H6-$C$9)/($C$7*$H$17),0),0)
     // let nuestroMesesAhorroOptimo = Math.round(Math.max((propertyValue * (1 - nsDiscuntPercentage) * (1 + nsComissionPercentage) * nsSavingsPercentage - savingsAvailable) / (ahorroOptimo), 0));
 
     console.log("NUESTRO:", nuestroAhorro, nuestroMesAhorroActual)
 
+
+    let hipRequiredDownPayment = 0.3 * propertyValue;
+    let estimatedTransactionCost = 0.0323*propertyValue;
+    let hipotecaAhorro = hipRequiredDownPayment + estimatedTransactionCost - savingsAvailable
     //+MAX(($C$4*(H13+H14+H15)-$C$9)/(($C$28-HOY())/30),0)
-    let hipotecaAhorro = Math.round(Math.max((propertyValue * (hiComissionPercentage + hiDiscuntPercentage + hiSavingsPercentage) - savingsAvailable) / (diffDays / 30), 0));
+    //let hipotecaAhorro = Math.round(Math.max((propertyValue * (hiComissionPercentage + hiDiscuntPercentage + hiSavingsPercentage) - savingsAvailable) / (diffDays / 30), 0));
     //+REDONDEAR(MAX(($C$4*(H13+H14+H15)-$C$9)/$C$11,0),0)
     let hipotecaMesAhorroActual = Math.round(Math.max((propertyValue * (hiComissionPercentage + hiDiscuntPercentage + hiSavingsPercentage) - savingsAvailable) / monthlySavings, 0));
     //+REDONDEAR(MAX(($C$4*(H13+H14+H15)-$C$9)/($C$7*$H$17),0),0)
