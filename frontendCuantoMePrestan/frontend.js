@@ -47,7 +47,8 @@ function fetchValues(e) {
   })
     .then((el) => el.json())
     .then((el) => {
-      resultado = el;
+      resultado = el.result;
+      console.log(el);
       let url =
         "https://nuestro-calculadoras-live.herokuapp.com/costosMensuales";
 
@@ -169,9 +170,9 @@ function fetchValues(e) {
           1 - consulta.initialFeeObject / resultado.nuestro.value
         );
       document.getElementById("tasa").innerText = percentageFormatter.format(
-        resultado.interestComparable
+        resultado2.interestComparable
       );
-      document.getElementById("term").innerText = resultado.term;
+      document.getElementById("term").innerText = resultado2.term;
     });
 }
 
