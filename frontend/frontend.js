@@ -241,6 +241,11 @@ window.onload = () => {
   form.addEventListener("change", () => {
     document.getElementById("submitBtn").disabled = !form.checkValidity();
   });
+  document.querySelectorAll("input").forEach((el) => {
+    el.addEventListener("blur", () => {
+      document.getElementById("submitBtn").disabled = !form.checkValidity();
+    });
+  });
 };
 
 function addCommas(x) {

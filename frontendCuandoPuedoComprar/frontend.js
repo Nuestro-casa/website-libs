@@ -155,11 +155,13 @@ window.onload = () => {
 
   const form = document.getElementById("form");
   form.addEventListener("change", () => {
-    // if (datepicker.getDate()) {
     document.getElementById("submitBtn").disabled = !form.checkValidity();
-    // }
   });
-
+  document.querySelectorAll("input").forEach((el) => {
+    el.addEventListener("blur", () => {
+      document.getElementById("submitBtn").disabled = !form.checkValidity();
+    });
+  });
   // datepicker.addEventListener("change", (e) => {
   //   if (datepicker.getDate()) {
   //     document.getElementById("submitBtn").disabled = !form.checkValidity();
