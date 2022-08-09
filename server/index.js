@@ -26,43 +26,43 @@ let globalInterestRate = 11.53 / 100;
 let calculoSavingRate = [
     {
         cuotaInicial: 15 / 100,
-        ahorro: 0.19
+        ahorro: 0.187774858066695
     },
     {
         cuotaInicial: 16 / 100,
-        ahorro: 0.17
+        ahorro:0.168909858066695
     },
     {
         cuotaInicial: 17 / 100,
-        ahorro: 0.15
+        ahorro: 0.150219886453356
     },
     {
         cuotaInicial: 18 / 100,
-        ahorro: 0.13
+        ahorro: 0.1315198864533560
     },
     {
         cuotaInicial: 19 / 100,
-        ahorro: 0.11
+        ahorro: 0.1126198864533560
     },
     {
         cuotaInicial: 20 / 100,
-        ahorro: 0.09
+        ahorro: 0.0938874290333478
     },
     {
         cuotaInicial: 21 / 100,
-        ahorro: 0.08
+        ahorro: 0.0751874290333478
     },
     {
         cuotaInicial: 22 / 100,
-        ahorro: 0.06
+        ahorro: 0.0563324574200086
     },
     {
         cuotaInicial: 23 / 100,
-        ahorro: 0.04
+        ahorro: 0.0375324574200086
     },
     {
         cuotaInicial: 24 / 100,
-        ahorro: 0.02
+        ahorro: 0.0187324574200086
     },
     {
         cuotaInicial: 25 / 100,
@@ -244,11 +244,18 @@ function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, ter
     let totalCostosNuestro = fiduciaria + seguro + impuestos + administracion + capex + maintenance;
 
     let ahorro;
-    calculoSavingRate.forEach((el, i) => {
-
-        if (Math.floor(downpayment * 100) == el.cuotaInicial * 100)
-            ahorro = el.ahorro / 100;
-    })
+    if(Math.floor(downpayment * 100)< 15){
+        console.log(downpayment)
+        ahorro = calculoSavingRate[0].ahorro/100
+    }else{
+        
+        calculoSavingRate.forEach((el, i) => {
+            console.log(el.ahorro, el.cuotaInicial, downpayment)
+            if (Math.floor(downpayment * 100) === el.cuotaInicial * 100)
+                ahorro = el.ahorro / 100;
+        })
+    }
+    console.log(ahorro)
 
 
 
