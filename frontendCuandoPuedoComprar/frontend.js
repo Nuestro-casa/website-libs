@@ -92,7 +92,7 @@ function fetchValues(e) {
 
       document.getElementById("viviendaAComprar").innerText =
         resultado.nuestro.nuestroMesAhorroActual <= 0
-          ? "YA!, Estás listo para comprar vivienda con Nuestro"
+          ? "YA! Estás listo para comprar vivienda con Nuestro"
           : resultado.nuestro.nuestroMesAhorroActual + " Meses";
 
       document.getElementById("temporalidadNS").innerText =
@@ -105,11 +105,11 @@ function fetchValues(e) {
           : currencyFormatter.format(resultado.nuestro.nuestroAhorro);
       document.getElementById("temporalidadHip").innerText =
         resultado.hipoteca.hipotecaMesAhorroActual <= 0
-          ? "Estas listo"
+          ? "Listo para comprar"
           : resultado.hipoteca.hipotecaMesAhorroActual + " Meses";
       document.getElementById("teHaceFaltaHip").innerText =
         resultado.hipoteca.hipotecaAhorro <= 0
-          ? "No te hace falta nada"
+          ? "$0"
           : currencyFormatter.format(resultado.hipoteca.hipotecaAhorro);
       let today = new Date();
       let nsDate = new Date(
