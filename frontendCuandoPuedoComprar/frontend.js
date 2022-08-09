@@ -91,16 +91,26 @@ function fetchValues(e) {
       resultado = el.result;
 
       document.getElementById("viviendaAComprar").innerText =
-        resultado.nuestro.nuestroMesAhorroActual + " Meses";
+        resultado.nuestro.nuestroMesAhorroActual <= 0
+          ? "YA!, Estás listo para comprar vivienda con Nuestro"
+          : resultado.nuestro.nuestroMesAhorroActual + " Meses";
 
       document.getElementById("temporalidadNS").innerText =
-        resultado.nuestro.nuestroMesAhorroActual + " Meses";
+        resultado.nuestro.nuestroMesAhorroActual <= 0
+          ? "Ahora mismo!"
+          : resultado.nuestro.nuestroMesAhorroActual + " Meses";
       document.getElementById("teHaceFaltaNS").innerText =
-        currencyFormatter.format(resultado.nuestro.nuestroAhorro);
+        resultado.nuestro.nuestroAhorro <= 0
+          ? "No te hace falta nada"
+          : currencyFormatter.format(resultado.nuestro.nuestroAhorro);
       document.getElementById("temporalidadHip").innerText =
-        resultado.hipoteca.hipotecaMesAhorroActual + " Meses";
+        resultado.hipoteca.hipotecaMesAhorroActual <= 0
+          ? "Estas listo"
+          : resultado.hipoteca.hipotecaMesAhorroActual + " Meses";
       document.getElementById("teHaceFaltaHip").innerText =
-        currencyFormatter.format(resultado.hipoteca.hipotecaAhorro);
+        resultado.hipoteca.hipotecaAhorro <= 0
+          ? "No te hace falta nada"
+          : currencyFormatter.format(resultado.hipoteca.hipotecaAhorro);
       let today = new Date();
       let nsDate = new Date(
         today.setMonth(
