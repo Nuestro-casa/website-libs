@@ -68,11 +68,25 @@
               onkeyup="myInputFormat(event,this.id);"
               id="cuotaInicialInput"
               required
+              oninput="rangeCuotaInicial.value=removeCommas(value)"
             />
           </div>
-
+          <input
+            type="range"
+            id="rangeCuotaInicial"
+            value="0"
+            min="0"
+            max="100000000"
+            step="1000000"
+            required
+            oninput="cuotaInicialInput.value=addCommas(value)"
+          />
+          <div class="progress-points">
+            <p>$ 0</p>
+            <p>$ 100.000.000</p>
+          </div>
           <div class="input-error">
-            <p>Este campo es requerido</p>
+            <p>Este campo es requerido (min100M, max 500M)</p>
           </div>
         </div>
 
@@ -87,11 +101,26 @@
               onkeyup="myInputFormat(event,this.id);"
               id="ahorroMensualInput"
               required
+              oninput="rangeAhorroMensualInput.value=removeCommas(value)"
             />
           </div>
 
+          <input
+            type="range"
+            id="rangeAhorroMensualInput"
+            value="0"
+            min="0"
+            max="10000000"
+            step="100000"
+            required
+            oninput="ahorroMensualInput.value=addCommas(value)"
+          />
+          <div class="progress-points">
+            <p>$ 0</p>
+            <p>$ 100.000.000</p>
+          </div>
           <div class="input-error">
-            <p>Este campo es requerido</p>
+            <p>Este campo es requerido (min100M, max 500M)</p>
           </div>
         </div>
         <!-- PERIODO PARA AHORRAR -->

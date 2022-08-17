@@ -146,6 +146,17 @@ window.onload = () => {
   const rangeInputsPrecio = document.querySelectorAll("#rangeNumber");
   const numberInputPrecio = document.querySelector("#progressNumber");
 
+  const rangeInputsCuotaInicial =
+    document.querySelectorAll("#rangeCuotaInicial");
+  const numberInputCuotaInicial = document.querySelector("#cuotaInicialInput");
+
+  const rangeInputsAhorroMensual = document.querySelectorAll(
+    "#rangeAhorroMensualInput"
+  );
+  const numberInputAhorroMensual = document.querySelector(
+    "#ahorroMensualInput"
+  );
+
   function handleInputChangePrecio(e) {
     let target = e.target;
     if (e.target.type !== "range") {
@@ -157,11 +168,47 @@ window.onload = () => {
     target.style.backgroundSize = ((val - min) * 100) / (max - min) + "% 100%";
   }
 
+  function handleInputChangeCuotaInicial(e) {
+    let target = e.target;
+    if (e.target.type !== "range") {
+      target = document.getElementById("rangeCuotaInicial");
+    }
+    const min = target.min;
+    const max = target.max;
+    const val = removeCommas(target.value);
+    target.style.backgroundSize = ((val - min) * 100) / (max - min) + "% 100%";
+  }
+
+  function handleInputChangeAhorroMensual(e) {
+    let target = e.target;
+    if (e.target.type !== "range") {
+      target = document.getElementById("rangeAhorroMensualInput");
+    }
+    const min = target.min;
+    const max = target.max;
+    const val = removeCommas(target.value);
+    target.style.backgroundSize = ((val - min) * 100) / (max - min) + "% 100%";
+  }
+
   rangeInputsPrecio.forEach((input) => {
     input.addEventListener("input", handleInputChangePrecio);
   });
+  rangeInputsCuotaInicial.forEach((input) => {
+    input.addEventListener("input", handleInputChangeCuotaInicial);
+  });
+  rangeInputsAhorroMensual.forEach((input) => {
+    input.addEventListener("input", handleInputChangeAhorroMensual);
+  });
 
   numberInputPrecio.addEventListener("input", handleInputChangePrecio);
+  numberInputCuotaInicial.addEventListener(
+    "input",
+    handleInputChangeCuotaInicial
+  );
+  numberInputAhorroMensual.addEventListener(
+    "input",
+    handleInputChangeAhorroMensual
+  );
 
   const form = document.getElementById("form");
   form.addEventListener("change", () => {
