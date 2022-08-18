@@ -161,6 +161,10 @@ function fetchValues(e) {
       chart.render();
 
       console.log(el);
+      document.getElementById("resumenIngresos").innerText =
+        currencyFormatter.format(consulta.monthlyIncomeObject);
+      document.getElementById("resumenCuota").innerText =
+        currencyFormatter.format(consulta.initialFeeObject);
       document.getElementById("viviendaAComprar").innerText =
         currencyFormatter.format(Math.floor(resultado.nuestro.value));
 

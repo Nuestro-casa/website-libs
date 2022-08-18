@@ -90,6 +90,13 @@ function fetchValues(e) {
       document.getElementById("submitBtn").style.background = "#E27758";
       resultado = el.result;
 
+      document.getElementById("resumenPrecioApto").innerText =
+        currencyFormatter.format(consulta.propertyValue);
+      document.getElementById("resumenAhorro").innerText =
+        currencyFormatter.format(consulta.savingsAvailable);
+      document.getElementById("resumenAhorroMensual").innerText =
+        currencyFormatter.format(consulta.monthlySavings);
+
       document.getElementById("viviendaAComprar").innerText =
         resultado.nuestro.nuestroMesAhorroActual <= 0
           ? "YA! Estás listo para comprar vivienda con Nuestro"

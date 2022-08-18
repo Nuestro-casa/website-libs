@@ -73,6 +73,11 @@ function fetchValues(e) {
       document.getElementById("submitBtn").style.background = "#E27758";
       resultado = el.result;
       console.log(el);
+
+      document.getElementById("resumenPrecioApto").innerText =
+        currencyFormatter.format(consulta.precio);
+      document.getElementById("resumenAhorro").innerText =
+        currencyFormatter.format(consulta.ahorro);
       document.getElementById("pagoMensualFijo").innerText =
         currencyFormatter.format(
           Math.floor(resultado.nuestro.totalMinimumPayment)
