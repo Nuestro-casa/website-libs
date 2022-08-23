@@ -99,12 +99,12 @@ function fetchValues(e) {
 
       document.getElementById("viviendaAComprar").innerText =
         resultado.nuestro.nuestroMesAhorroActual <= 0
-          ? "YA! Estás listo para comprar vivienda con Nuestro"
+          ? "¡YA! Estás listo para comprar vivienda con Nuestro"
           : resultado.nuestro.nuestroMesAhorroActual + " Meses";
 
       document.getElementById("temporalidadNS").innerText =
         resultado.nuestro.nuestroMesAhorroActual <= 0
-          ? "Ahora mismo!"
+          ? "¡Ahora mismo!"
           : resultado.nuestro.nuestroMesAhorroActual + " Meses";
       document.getElementById("teHaceFaltaNS").innerText =
         resultado.nuestro.nuestroAhorro <= 0
