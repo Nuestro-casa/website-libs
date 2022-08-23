@@ -3,8 +3,8 @@ document.querySelectorAll(".calculadora-container").forEach((el) => {
     `<div class="select-wrapper">
       <select class="select-nuestro" onchange="if (this.value) window.location.href=this.value">
         <option value="/nuestro-calculadora">Calculadora Couta mensual</option>
-        <option value="/nuestro-calculadora-cuando-puedo-comprar">Calculadora ¿Cúando puedo comprar?</option>
-        <option value="/nuestro-calculadora-cuanto-puedo-comprar">Calculadora ¿Cúanto me prestan?</option>
+        <option value="/nuestro-calculadora-cuando-puedo-comprar">Calculadora ¿Cuándo puedo comprar?</option>
+        <option value="/nuestro-calculadora-cuanto-puedo-comprar">Calculadora ¿Cuánto me prestan?</option>
       </select>
     </div>
    ` + el.innerHTML;
