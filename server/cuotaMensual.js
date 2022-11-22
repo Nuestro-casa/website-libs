@@ -1,6 +1,6 @@
 let term= 20;
-let interestComparable=14/100;
-let globalInterestRate = 11.53/100;
+let interestComparable=17/100;
+let globalInterestRate = 14/100;
 let calculoSavingRate=[
     {
         cuotaInicial:15/100,

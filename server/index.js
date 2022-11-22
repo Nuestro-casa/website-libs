@@ -19,10 +19,11 @@ let hiComissionPercentage = 0.16 / 100;
 
 let howMuchSavingsPercentage = 20 / 100;
 
+let rate = 14;
 
 let term = 20;
-let interestComparable = 14 / 100;
-let globalInterestRate = 11.53 / 100;
+let interestComparable = 17 / 100;
+let globalInterestRate = rate / 100;
 let calculoSavingRate = [
     {
         cuotaInicial: 15 / 100,
@@ -541,4 +542,13 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(PORT, () => console.log(`App Listening on port ${PORT}`));
+app.listen(PORT, () => {
+  const options = {method: 'GET'};
+
+fetch('https://duppla-app.herokuapp.com/rates/getRate', options)
+  .then(response => response.json())
+  .then(response => {console.log(response)
+                    this.rate = response.value
+                    console.log(`App Listening on port ${PORT}`)})
+  .catch(err => console.error(err));
+  });
