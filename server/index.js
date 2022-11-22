@@ -19,7 +19,7 @@ let hiComissionPercentage = 0.16 / 100;
 
 let howMuchSavingsPercentage = 20 / 100;
 
-let rate = 1;
+let rate = 14;
 
 let term = 20;
 let interestComparable = 17 / 100;
