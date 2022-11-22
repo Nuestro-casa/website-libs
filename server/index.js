@@ -19,10 +19,17 @@ let hiComissionPercentage = 0.16 / 100;
 
 let howMuchSavingsPercentage = 20 / 100;
 
+let rate;
+const options = {method: 'GET'};
 
+fetch('https://duppla-app.herokuapp.com/rates/getRateBank', options)
+  .then(response => response.json())
+  .then(response => {console.log(response)
+                    this.rate = response.value})
+  .catch(err => console.error(err));
 let term = 20;
 let interestComparable = 17 / 100;
-let globalInterestRate = 14 / 100;
+let globalInterestRate = this.rate / 100;
 let calculoSavingRate = [
     {
         cuotaInicial: 15 / 100,
