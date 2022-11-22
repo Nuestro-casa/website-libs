@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const fetch = (...args) =>
+	import('node-fetch').then(({default: fetch}) => fetch(...args));
 const app = express();
 
 
@@ -22,7 +24,8 @@ let howMuchSavingsPercentage = 20 / 100;
 let rate = 14;
 
 let term = 20;
-let interestComparable = 17 / 100;
+let bankRate = 17;
+let interestComparable = bankRate / 100;
 let globalInterestRate = rate / 100;
 let calculoSavingRate = [
     {
@@ -547,8 +550,17 @@ app.listen(PORT, () => {
 
 fetch('https://duppla-app.herokuapp.com/rates/getRate', options)
   .then(response => response.json())
-  .then(response => {console.log(response)
+  .then(response => {
                     this.rate = response.value
-                    console.log(`App Listening on port ${PORT}`)})
+                    console.log(this.rate)
+                    const options = {method: 'GET'};
+                    fetch('https://duppla-app.herokuapp.com/rates/getRateBank', options)
+                        .then(response => response.json())
+                        .then(response => {
+                            this.bankRate = response.value
+                            console.log(this.bankRate)
+                            console.log(`App Listening on port ${PORT}`)})
+                        .catch(err => console.error(err));
+        })
   .catch(err => console.error(err));
   });
