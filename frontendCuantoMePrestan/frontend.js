@@ -96,7 +96,7 @@ function fetchValues(e) {
             name: "Valor de la vivienda",
             data: [
               {
-                x: "Nuestro",
+                x: "Duppla",
                 y: Math.round(resultado.nuestro.value),
                 fillColor: "#0ACF83",
               },
