@@ -81,7 +81,7 @@ function calculate(monthlyIncomeObject, initialFeeObject) {
   var name = "Cuanto me prestan";
   var data = [
     {
-      name: "NUESTRO",
+      name: "Duppla",
       value: nuestroMaximunAparmentValue,
     },
     {
@@ -145,7 +145,7 @@ function calculate(monthlyIncomeObject, rateObject, termObject, initialFeeObject
       value: maximumValueMortgagePaymentObject,
     },
     {
-      name: "NUESTRO",
+      name: "Duppla",
       value: nuestro,
     },
     {
