@@ -336,7 +336,7 @@ function calculate() {
   console.log("expenses3 " + expenses3);
 
   // Comenzamos a graficar
-  var name = "Nuestro";
+  var name = "Duppla";
   var data = [
     {
       name: "Costo financiero",
@@ -408,7 +408,7 @@ function createResult(data, data2) {
   var result2 = data2[0].value + data2[1].value + data2[2].value;
 
   var html =
-    "<p>¿Cuanto vas a pagar al mes?</p><p>Con nuestro tu pago mensual es: $" +
+    "<p>¿Cuanto vas a pagar al mes?</p><p>Con Duppla tu pago mensual es: $" +
     addCommas(result1) +
     "</p><p>Con la hipoteca(*) tu pago mensual es: $" +
     addCommas(result2) +
@@ -416,7 +416,7 @@ function createResult(data, data2) {
 
   if (result1 < result2) {
     var result3 = result2 - result1;
-    var html2 = "<p>Con nuestro ahorra $" + addCommas(result3) + " al mes</p>";
+    var html2 = "<p>Con Duppla ahorra $" + addCommas(result3) + " al mes</p>";
     html = html + html2;
   }
 
