@@ -73,7 +73,7 @@ function fetchValues(e) {
   };
 
   let url =
-    "https://duppla-app.herokuapp.com/cuandoPuedoComprar";
+    "https://duppla-calculadora.herokuapp.com/cuandoPuedoComprar";
 
   fetch(url, {
     method: "POST",
