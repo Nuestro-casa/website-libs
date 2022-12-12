@@ -58,7 +58,7 @@ function fetchValues(e) {
   document.getElementById("submitBtn").innerText = "Cargando...";
   document.getElementById("submitBtn").disabled = true;
   document.getElementById("submitBtn").style.background =
-    "rgba(253, 218, 197, 1)";
+    "#cecfd1";
   consulta = {
     propertyValue: +removeCommas(
       document.getElementById("progressNumber").value
