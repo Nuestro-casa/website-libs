@@ -174,6 +174,8 @@ function fetchValues(e) {
 
       document.getElementById("necesitasHip").innerText =
         currencyFormatter.format(Math.floor(consulta.precio * 0.33));
+     document.getElementById("resAhorro").innerText =
+        currencyFormatter.format(consulta.ahorro);
       //(1 - initialFee / price)*100
       document.getElementById("financiamientoPercentage").innerText =
         percentageFormatter.format(1 - consulta.ahorro / consulta.precio);
