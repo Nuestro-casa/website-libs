@@ -53,7 +53,7 @@ function fetchValues(e) {
     precio: +removeCommas(document.getElementById("progressNumber").value),
     ahorro: +removeCommas(document.getElementById("ahorroInput").value),
   };
-  let url = "https://duppla-calculadora.herokuapp.com/costosMensuales";
+  let url = "https://calculadoras-duppla.herokuapp.com/costosMensuales";
 
   fetch(url, {
     method: "POST",
