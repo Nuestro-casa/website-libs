@@ -47,7 +47,7 @@ function fetchValues(e) {
       document.getElementById("cuotaInicialInput").value
     ),
   };
-  let url = "https://duppla-calculadora.herokuapp.com/cuantoMePrestan";
+  let url = "https://calculadoras-duppla.herokuapp.com/cuantoMePrestan";
 
   fetch(url, {
     method: "POST",
@@ -62,7 +62,7 @@ function fetchValues(e) {
       resultado = el.result;
       console.log(el);
       let url =
-        "https://duppla-calculadora.herokuapp.com/costosMensuales";
+        "https://calculadoras-duppla.herokuapp.com/costosMensuales";
 
       return fetch(url, {
         method: "POST",
