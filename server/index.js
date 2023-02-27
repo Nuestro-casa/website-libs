@@ -389,7 +389,7 @@ function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
     var maximunFee = maximunFeePercentage * monthlyIncomeObject;
     var bankMaximunAparmentValue = initialFeeObject / (0.3 + estimateTxCost);
     var nuestroMaximunAparmentValue = 0;
-    var rate = 0.15;
+    var rate = abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank')/100;
     var difference = 1;
     var totalTxValue = 0;
     var valorApto = 0;
