@@ -117,10 +117,10 @@ app.get("/", (req, res) => {
     res.send("Hola");
 });
 
-app.post("/cuantoMePrestan", (req, res, next) => {
+app.post("/cuantoMePrestan", async (req, res, next) => {
     const { monthlyIncomeObject, initialFeeObject } =
         req.body;
-    let result = calculateCuantoMePrestan(
+    let result = await calculateCuantoMePrestan(
         monthlyIncomeObject,
         initialFeeObject
     );
