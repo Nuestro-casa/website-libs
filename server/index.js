@@ -27,10 +27,10 @@ async function abc(url) {
     return jobj;
 }
 
-let rate = await abc('https://duppla-app.herokuapp.com/rates/getRate').then((value) => console.log(value));
+let rate = abc('https://duppla-app.herokuapp.com/rates/getRate');
 
 let term = 20;
-let bankRate = await abc('https://duppla-app.herokuapp.com/rates/getRateBank').then((value) => console.log(value));;
+let bankRate = abc('https://duppla-app.herokuapp.com/rates/getRateBank');
 let interestComparable = bankRate / 100;
 let globalInterestRate = rate / 100;
 let calculoSavingRate = [
