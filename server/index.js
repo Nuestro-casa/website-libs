@@ -21,10 +21,16 @@ let hiComissionPercentage = 0.16 / 100;
 
 let howMuchSavingsPercentage = 20 / 100;
 
-let rate = 15;
+async function abc(url) {
+    var resp = await fetch(url);
+    var jobj = await resp.json();
+    return jobj;
+}
+
+let rate = await abc('https://duppla-app.herokuapp.com/rates/getRate').then((value) => console.log(value));
 
 let term = 20;
-let bankRate = 18;
+let bankRate = await abc('https://duppla-app.herokuapp.com/rates/getRateBank').then((value) => console.log(value));;
 let interestComparable = bankRate / 100;
 let globalInterestRate = rate / 100;
 let calculoSavingRate = [
