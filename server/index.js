@@ -388,7 +388,7 @@ async function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
     var nuestroMaximunAparmentValue = 0;
     var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRate');
     var jobj = await resp.json();
-    var rate = jobj.value;
+    var rate = jobj.value/100;
     var difference = 1;
     var totalTxValue = 0;
     var valorApto = 0;
