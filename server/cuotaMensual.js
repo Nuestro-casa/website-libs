@@ -1,6 +1,11 @@
 let term= 20;
-let interestComparable=17/100;
-let globalInterestRate = 14/100;
+async function abc(url) {
+    var resp = await fetch(url);
+    var jobj = await resp.json();
+    return jobj.value;
+}
+let interestComparable=abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank')/100;
+let globalInterestRate = abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank')/100;
 let calculoSavingRate=[
     {
         cuotaInicial:15/100,
