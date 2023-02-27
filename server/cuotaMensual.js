@@ -4,7 +4,7 @@ async function abc(url) {
     var jobj = await resp.json();
     return jobj.value;
 }
-let interestComparable=abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank')/100;
+let interestComparable= abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank')/100;
 let globalInterestRate = abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank')/100;
 let calculoSavingRate=[
     {

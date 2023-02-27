@@ -375,7 +375,7 @@ function PMT(ir, np, pv, fv, type) {
     return pmt;
 }
 
-function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
+async function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
     ////Initial Variables
   
     var usableSalary = 0.9;
@@ -386,7 +386,9 @@ function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
     var maximunFee = maximunFeePercentage * monthlyIncomeObject;
     var bankMaximunAparmentValue = initialFeeObject / (0.3 + estimateTxCost);
     var nuestroMaximunAparmentValue = 0;
-    var rate = abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank')/100;
+    var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRate');
+    var jobj = await resp.json();
+    var rate = jobj.value;
     var difference = 1;
     var totalTxValue = 0;
     var valorApto = 0;
