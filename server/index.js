@@ -21,10 +21,10 @@ let hiComissionPercentage = 0.16 / 100;
 
 let howMuchSavingsPercentage = 20 / 100;
 
-let rate = 14;
+let rate = 15;
 
 let term = 20;
-let bankRate = 17;
+let bankRate = 18;
 let interestComparable = bankRate / 100;
 let globalInterestRate = rate / 100;
 let calculoSavingRate = [
