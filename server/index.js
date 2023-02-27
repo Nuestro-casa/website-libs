@@ -21,18 +21,8 @@ let hiComissionPercentage = 0.16 / 100;
 
 let howMuchSavingsPercentage = 20 / 100;
 
-async function abc(url) {
-    var resp = await fetch(url);
-    var jobj = await resp.json();
-    return jobj.value;
-}
-
-let rate = abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank');
-
 let term = 20;
-let bankRate = abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank');
-let interestComparable = bankRate / 100;
-let globalInterestRate = rate / 100;
+
 let calculoSavingRate = [
     {
         cuotaInicial: 15 / 100,
@@ -147,12 +137,15 @@ app.post("/cuandoPuedoComprar", (req, res, next) => {
     res.send({ success: true, result });
 });
 
-app.post("/costosMensuales", (req, res, next) => {
+app.post("/costosMensuales",async (req, res, next) => {
+    var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank');
+    var jobj = await resp.json();
     const { precio, ahorro } =
         req.body;
+    console.log("interes :"+ jobj.value/100);
 
-    let result = calculateGastosMensuales(
-        precio, ahorro, interestComparable, term
+    let result = await calculateGastosMensuales(
+        precio, ahorro, jobj.value/100, term
     );
     res.send({ success: true, result });
 });
@@ -222,7 +215,7 @@ function calculateCuandoPuedoComprar(propertyValue, savingsAvailable, monthlySav
     return resultado;
 }
 
-function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, term) {
+async function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, term) {
     let transactionValue = 1.1 * precioApto;
 
     let apartmentValue = precioApto;
@@ -230,7 +223,11 @@ function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, ter
 
     let financing = transactionValue - cuantoTengoAhorrado;
 
-    let interestRate = globalInterestRate;
+    var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRate');
+    var jobj = await resp.json();
+
+    let interestRate = jobj.value/100;
+    console.log(interestRate);
 
     let downpayment = cuantoTengoAhorrado / transactionValue;
 
@@ -333,7 +330,7 @@ function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interest, ter
             costosHip,
             cuotaHip
         },
-        interestComparable,
+        interest,
         term
     }
 
