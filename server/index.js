@@ -24,13 +24,13 @@ let howMuchSavingsPercentage = 20 / 100;
 async function abc(url) {
     var resp = await fetch(url);
     var jobj = await resp.json();
-    return jobj;
+    return jobj.value;
 }
 
-let rate = abc('https://duppla-app.herokuapp.com/rates/getRate');
+let rate = abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank');
 
 let term = 20;
-let bankRate = abc('https://duppla-app.herokuapp.com/rates/getRateBank');
+let bankRate = abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank');
 let interestComparable = bankRate / 100;
 let globalInterestRate = rate / 100;
 let calculoSavingRate = [
@@ -551,22 +551,4 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(PORT, () => {
-  const options = {method: 'GET'};
-
-fetch('https://duppla-app.herokuapp.com/rates/getRate', options)
-  .then(response => response.json())
-  .then(response => {
-                    this.rate = response.value
-                    console.log(this.rate)
-                    const options = {method: 'GET'};
-                    fetch('https://duppla-app.herokuapp.com/rates/getRateBank', options)
-                        .then(response => response.json())
-                        .then(response => {
-                            this.bankRate = response.value
-                            console.log(this.bankRate)
-                            console.log(`App Listening on port ${PORT}`)})
-                        .catch(err => console.error(err));
-        })
-  .catch(err => console.error(err));
-  });
+app.listen(PORT, () => { });
