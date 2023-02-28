@@ -180,7 +180,7 @@ function fetchValues(e) {
       document.getElementById("financiamientoPercentage").innerText =
         percentageFormatter.format(1 - consulta.ahorro / consulta.precio);
       document.getElementById("tasa").innerText = percentageFormatter.format(
-        resultado.interestComparable
+        resultado.interest
       );
       document.getElementById("term").innerText = resultado.term;
     });
