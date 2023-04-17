@@ -138,7 +138,7 @@ app.post("/cuandoPuedoComprar", (req, res, next) => {
 });
 
 app.post("/costosMensuales",async (req, res, next) => {
-    var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank');
+    var resp = await fetch('https://rates-dev.herokuapp.com/rates/getRateBank');
     var jobj = await resp.json();
     const { precio, ahorro } =
         req.body;
@@ -223,7 +223,7 @@ async function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interes
 
     let financing = transactionValue - cuantoTengoAhorrado;
 
-    var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRate');
+    var resp = await fetch('https://rates-dev.herokuapp.com/rates/getRate');
     var jobj = await resp.json();
 
     let interestRate = jobj.value/100;
@@ -386,7 +386,7 @@ async function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
     var maximunFee = maximunFeePercentage * monthlyIncomeObject;
     var bankMaximunAparmentValue = initialFeeObject / (0.3 + estimateTxCost);
     var nuestroMaximunAparmentValue = 0;
-    var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRate');
+    var resp = await fetch('https://rates-dev.herokuapp.com/rates/getRate');
     var jobj = await resp.json();
     var rate = jobj.value/100;
     var difference = 1;
