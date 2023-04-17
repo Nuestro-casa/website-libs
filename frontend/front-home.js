@@ -41,7 +41,7 @@ var currencyFormatter = new Intl.NumberFormat("es-CO", {
       precio: +removeCommas(document.getElementById("progressNumber").value),
       ahorro: +removeCommas(document.getElementById("ahorroInput").value),
     };
-    let url = "https://calculadoras-duppla.herokuapp.com/costosMensuales";
+    let url = "https://calculadoras-dev.herokuapp.com/costosMensuales";
   
     fetch(url, {
       method: "POST",
