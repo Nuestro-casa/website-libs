@@ -2,10 +2,11 @@ let term= 20;
 async function abc(url) {
     var resp = await fetch(url);
     var jobj = await resp.json();
-    return jobj.value;
+    const tasaBanco = jobj.find(item => item.name === "TasaBanco");
+    return tasaBanco;
 }
-let interestComparable= abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank')/100;
-let globalInterestRate = abc('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank')/100;
+let interestComparable= abc('https://sourceoftruth.herokuapp.com/dataRaw')/100;
+let globalInterestRate = abc('https://sourceoftruth.herokuapp.com/dataRaw')/100;
 let calculoSavingRate=[
     {
         cuotaInicial:15/100,

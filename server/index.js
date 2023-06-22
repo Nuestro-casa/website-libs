@@ -138,14 +138,15 @@ app.post("/cuandoPuedoComprar", (req, res, next) => {
 });
 
 app.post("/costosMensuales",async (req, res, next) => {
-    var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRateBank');
+    var resp = await fetch('https://sourceoftruth.herokuapp.com/dataRaw');
     var jobj = await resp.json();
+    const tasaBanco = jobj.find(item => item.name === "TasaBanco");
     const { precio, ahorro } =
         req.body;
-    console.log("interes :"+ jobj.value/100);
+    console.log("interes :"+ tasaBanco/100);
 
     let result = await calculateGastosMensuales(
-        precio, ahorro, jobj.value/100, term
+        precio, ahorro, tasaBanco/100, term
     );
     res.send({ success: true, result });
 });
@@ -223,10 +224,11 @@ async function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interes
 
     let financing = transactionValue - cuantoTengoAhorrado;
 
-    var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRate');
+    var resp = await fetch('https://sourceoftruth.herokuapp.com/dataRaw');
     var jobj = await resp.json();
+    const tasaduppla = jobj.find(item => item.name === "TasaDuppla");
 
-    let interestRate = jobj.value/100;
+    let interestRate = tasaduppla/100;
     console.log(interestRate);
 
     let downpayment = cuantoTengoAhorrado / transactionValue;
@@ -386,9 +388,10 @@ async function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
     var maximunFee = maximunFeePercentage * monthlyIncomeObject;
     var bankMaximunAparmentValue = initialFeeObject / (0.3 + estimateTxCost);
     var nuestroMaximunAparmentValue = 0;
-    var resp = await fetch('https://sistema-duppla-rates.herokuapp.com/rates/getRate');
+    var resp = await fetch('https://sourceoftruth.herokuapp.com/dataRaw');
     var jobj = await resp.json();
-    var rate = jobj.value/100;
+    const tasaDuppla = jobj.find(item => item.name === "TasaDuppla");
+    var rate = tasaDuppla/100;
     var difference = 1;
     var totalTxValue = 0;
     var valorApto = 0;
