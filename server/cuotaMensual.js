@@ -3,7 +3,7 @@ async function abc(url) {
     var resp = await fetch(url);
     var jobj = await resp.json();
     const tasaBanco = jobj.find(item => item.name === "TasaBanco");
-    return tasaBanco;
+    return tasaBanco.Value;
 }
 let interestComparable= abc('https://sourceoftruth.herokuapp.com/dataRaw')/100;
 let globalInterestRate = abc('https://sourceoftruth.herokuapp.com/dataRaw')/100;

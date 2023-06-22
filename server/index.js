@@ -141,12 +141,13 @@ app.post("/costosMensuales",async (req, res, next) => {
     var resp = await fetch('https://sourceoftruth.herokuapp.com/dataRaw');
     var jobj = await resp.json();
     const tasaBanco = jobj.find(item => item.name === "TasaBanco");
+    console.log(tasaBanco)
     const { precio, ahorro } =
         req.body;
-    console.log("interes :"+ tasaBanco/100);
+    console.log("interes :"+ tasaBanco.Value/100);
 
     let result = await calculateGastosMensuales(
-        precio, ahorro, tasaBanco/100, term
+        precio, ahorro, tasaBanco.Value/100, term
     );
     res.send({ success: true, result });
 });
@@ -228,7 +229,7 @@ async function calculateGastosMensuales(precioApto, cuantoTengoAhorrado, interes
     var jobj = await resp.json();
     const tasaduppla = jobj.find(item => item.name === "TasaDuppla");
 
-    let interestRate = tasaduppla/100;
+    let interestRate = tasaduppla.Value/100;
     console.log(interestRate);
 
     let downpayment = cuantoTengoAhorrado / transactionValue;
@@ -391,7 +392,7 @@ async function calculateCuantoMePrestan(monthlyIncomeObject, initialFeeObject) {
     var resp = await fetch('https://sourceoftruth.herokuapp.com/dataRaw');
     var jobj = await resp.json();
     const tasaDuppla = jobj.find(item => item.name === "TasaDuppla");
-    var rate = tasaDuppla/100;
+    var rate = tasaDuppla.Value/100;
     var difference = 1;
     var totalTxValue = 0;
     var valorApto = 0;
